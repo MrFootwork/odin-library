@@ -9,6 +9,7 @@
 // body.appendChild(test)
 
 const app = document.getElementById('app')
+const library = document.getElementById('library')
 
 //Input field
 const input = document.getElementById('input')
@@ -18,16 +19,16 @@ input.addEventListener('input', readInput)
 //odin project
 let myLibrary = [
 	{
-		Title: 'erstes Buch',
-		Author: 'Pandau',
-		Pages: 255,
-		Read: false,
+		title: 'erstes Buch',
+		author: 'Pandau',
+		pages: 255,
+		read: false,
 	},
 	{
-		Title: 'zweites Buch',
-		Author: 'Jia',
-		Pages: 12,
-		Read: true,
+		title: 'zweites Buch',
+		author: 'Jia',
+		pages: 12,
+		read: true,
 	},
 ]
 
@@ -40,3 +41,10 @@ function readInput(e) {
 }
 
 function addBookToLibrary() {}
+
+//display all books in the library
+;(function displayLibrary(library) {
+	library.forEach(book => {
+		console.log(book.title)
+	})
+})(myLibrary)
