@@ -3,7 +3,9 @@ body {
 
 }
 
-#app {}
+#app {
+  //
+}
 
 div {
   margin: 1rem auto
@@ -25,10 +27,17 @@ div {
 
 .book {
   background-color: rebeccapurple;
+  padding         : 1em;
   opacity         : 50%;
   border-radius   : 1rem;
   margin          : 2rem;
   height          : 20rem;
   width           : 15rem;
 
+}
+
+.book button {
+  width           : 15px;
+  height          : 15px;
+  background-color: rgb(255, 0, 0);
 }

@@ -3,8 +3,10 @@ const error = document.getElementById('error')
 
 //App
 const app = document.getElementById('app')
+const library = document.getElementById('library')
 
 //form field
+const formWrapper = document.getElementById('form-wrapper')
 const form = document.getElementById('form')
 const title = document.getElementById('title')
 const author = document.getElementById('author')
@@ -28,19 +30,18 @@ form.addEventListener('submit', e => {
 	addBookToLibrary(title.value, author.value, pages.value)
 })
 
-//odin project
 let myLibrary = [
 	{
-		Title: 'erstes Buch',
-		Author: 'Pandau',
-		Pages: 255,
-		Read: false,
+		title: 'erstes Buch',
+		author: 'Pandau',
+		pages: 255,
+		read: false,
 	},
 	{
-		Title: 'zweites Buch',
-		Author: 'Jia',
-		Pages: 12,
-		Read: true,
+		title: 'zweites Buch',
+		author: 'Jia',
+		pages: 12,
+		read: true,
 	},
 ]
 
@@ -71,7 +72,7 @@ function resetDOMLibrary() {
 }
 
 function displayLibrary(libraryDB) {
-	libraryDB.forEach(book => {
+	libraryDB.forEach((book, i) => {
 		console.log(book.title)
 		const bookCard = document.createElement('div')
 		const cardRows = document.createElement('div')
@@ -83,11 +84,14 @@ function displayLibrary(libraryDB) {
 		title.innerHTML = book.title
 		author.innerHTML = book.author
 		pages.innerHTML = book.pages
+		const deleteButton = document.createElement('button')
+		// deleteButton.attributes.data-book-no = i
 		library.appendChild(bookCard)
 		bookCard.appendChild(cardRows)
 		cardRows.appendChild(title)
 		cardRows.appendChild(author)
 		cardRows.appendChild(pages)
+		cardRows.appendChild(deleteButton)
 	})
 }
 displayLibrary(myLibrary)

@@ -7,26 +7,26 @@
 		<link rel="stylesheet" href="style.css" />
 	</head>
 	<body>
-		<div id="error"></div>
 		<div id="app">
+			<div id="error"></div>
 			<h1>myLibrary</h1>
-			<form id="form" action="submit">
-				<div class="title">
-					<label for="title">Title</label>
-					<input id="title" name="name" type="text" />
-				</div>
-
-				<div class="author">
-					<label for="author">Author</label>
-					<input id="author" name="author" type="text" />
-				</div>
-
-				<div class="pages">
-					<label for="pages">Pages</label>
-					<input id="pages" name="pages" type="text" />
-				</div>
-				<button type="submit">Buch speichern</button>
-			</form>
+			<div id="form-wrapper">
+				<form id="form" action="submit">
+					<div class="title">
+						<label for="title">Title</label>
+						<input id="title" name="name" type="text" />
+					</div>
+					<div class="author">
+						<label for="author">Author</label>
+						<input id="author" name="author" type="text" />
+					</div>
+					<div class="pages">
+						<label for="pages">Pages</label>
+						<input id="pages" name="pages" type="text" />
+					</div>
+					<button type="submit">Buch speichern</button>
+				</form>
+			</div>
 			<section id="library"></section>
 		</div>
 	</body>
