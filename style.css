@@ -1,0 +1,34 @@
+body {
+  display: block;
+
+}
+
+#app {}
+
+div {
+  margin: 1rem auto
+}
+
+#input {
+  display: block
+}
+
+#values {
+  display: block
+}
+
+#library {
+  display        : flex;
+  flex-wrap      : wrap;
+  justify-content: center;
+}
+
+.book {
+  background-color: rebeccapurple;
+  opacity         : 50%;
+  border-radius   : 1rem;
+  margin          : 2rem;
+  height          : 20rem;
+  width           : 15rem;
+
+}
