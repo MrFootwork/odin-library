@@ -12,8 +12,18 @@ const title = document.getElementById('title')
 const author = document.getElementById('author')
 const pages = document.getElementById('pages')
 const read = document.getElementById('read')
-
+//TODO Authentication
 // TODO Implement firebase to save data
+
+let myLibrary = db
+	.collection('library')
+	.get()
+	.then(snapshot => {
+		return snapshot.docs.reduce((library, doc) => {
+			library.push(doc.data())
+			return library
+		}, [])
+	})
 
 function validateInput(title, author, pages) {
 	const titleIsValid = /\w+/.test(title)
@@ -52,20 +62,20 @@ library.addEventListener('click', e => {
 	if (bookNumber) deleteBook(bookNumber)
 })
 
-let myLibrary = [
-	{
-		title: 'erstes Buch',
-		author: 'Pandau',
-		pages: 255,
-		read: false,
-	},
-	{
-		title: 'zweites Buch',
-		author: 'Jia',
-		pages: 12,
-		read: true,
-	},
-]
+// let myLibrary = [
+// 	{
+// 		title: 'erstes Buch',
+// 		author: 'Pandau',
+// 		pages: 255,
+// 		read: false,
+// 	},
+// 	{
+// 		title: 'zweites Buch',
+// 		author: 'Jia',
+// 		pages: 12,
+// 		read: true,
+// 	},
+// ]
 
 function Book(title, author, pages, read = false) {
 	this.title = title
