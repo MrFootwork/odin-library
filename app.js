@@ -1,24 +1,11 @@
-//App
-const app = document.getElementById('app')
-const library = document.getElementById('library')
-var snapshotLibrary = []
-
-//form field
-const formWrapper = document.getElementById('form-wrapper')
-const form = document.getElementById('form')
-const title = document.getElementById('title')
-const author = document.getElementById('author')
-const pages = document.getElementById('pages')
-const read = document.getElementById('read')
+import * as global from './global'
+import * as book from './book.js'
 
 //TODO Authentication
 
 /*################################
 #   Modal
 ################################*/
-var modal = document.getElementById('myModal')
-var modalButton = document.getElementById('modalButton')
-var span = document.getElementsByClassName('close')[0]
 
 modalButton.onclick = function () {
 	modal.style.display = 'block'
@@ -61,7 +48,7 @@ form.addEventListener('submit', e => {
 		// TODO Error-Handler
 		throw new Error('Eingabe enthält Fehler!')
 	}
-	addBookToLibrary(thisTitle, thisAuthor, thisPages, thisRead)
+	snapshotLibrary = book.add(thisTitle, thisAuthor, thisPages, thisRead)
 	thisTitle = ''
 	thisAuthor = ''
 	thisPages = ''
@@ -72,11 +59,11 @@ library.addEventListener('click', e => {
 	const bookId = e.target.dataset.book
 	const element = e.target.tagName
 	if (element === 'BUTTON') {
-		if (bookId) deleteBook(bookId)
+		if (bookId) book.remove(bookId)
 	}
 	if (element === 'INPUT') {
 		const readState = e.target.checked
-		if (bookId) updateRead(bookId, readState)
+		if (bookId) book.update(bookId, readState)
 	}
 })
 
@@ -90,111 +77,8 @@ function Book(title, author, pages, read = false) {
 /*################################
 #   UI
 ################################*/
-function resetDOMLibrary() {
-	while (library.lastElementChild) {
-		library.removeChild(library.lastElementChild)
-	}
-}
 
 ;(async function initializeApp() {
-	snapshotLibrary = await loadDB()
-	displayLibrary(snapshotLibrary)
+	snapshotLibrary = await book.loadDB()
+	book.renderAll(snapshotLibrary)
 })()
-
-/*################################
-#   DB Calls
-################################*/
-
-async function loadDB() {
-	let dbLibrary = await db
-		.collection('library')
-		.get()
-		.then(snapshot => {
-			return snapshot.docs.reduce((library, doc) => {
-				library.push({
-					id: doc.id,
-					...doc.data(),
-				})
-				return library
-			}, [])
-		})
-	return dbLibrary.sort((a, b) => {
-		if (a.title < b.title) return -1
-		if (b.title < a.title) return 1
-		return 0
-	})
-}
-
-async function addBookToLibrary(title, author, pages, read = false) {
-	db.collection('library').add({
-		title,
-		author,
-		pages,
-		read,
-	})
-	snapshotLibrary = await loadDB()
-	resetDOMLibrary()
-	displayLibrary(snapshotLibrary)
-	modal.style.display = 'none'
-	//TODO kurzes Highlighting des neu hinzugefügten Buches
-}
-
-function updateRead(bookId, readState) {
-	db.collection('library').doc(bookId).update({ read: readState })
-}
-
-function deleteBook(bookId) {
-	db.collection('library').doc(bookId).delete()
-	snapshotLibrary.forEach((book, i) => {
-		if (book.id === bookId) snapshotLibrary.splice(i, 1)
-	})
-	document.getElementById(bookId).remove()
-}
-
-function renderBook(book) {
-	const bookCard = document.createElement('div')
-	bookCard.classList.add('book')
-	bookCard.id = book.id
-	library.appendChild(bookCard)
-
-	const textRow = document.createElement('div')
-	textRow.classList.add('textRow')
-	bookCard.appendChild(textRow)
-
-	const title = document.createElement('h2')
-	const author = document.createElement('h3')
-	const pages = document.createElement('h3')
-	title.innerHTML = `${book.title}`
-	author.innerHTML = `written by ${book.author}`
-	pages.innerHTML = `${book.pages} pages`
-	textRow.appendChild(title)
-	textRow.appendChild(author)
-	textRow.appendChild(pages)
-
-	const buttonRow = document.createElement('div')
-	buttonRow.classList.add('buttonRow')
-	bookCard.appendChild(buttonRow)
-
-	const deleteButton = document.createElement('button')
-	deleteButton.dataset.book = book.id
-	deleteButton.classList.add('deleteButton')
-	buttonRow.appendChild(deleteButton)
-
-	const toggleSwitch = document.createElement('label')
-	toggleSwitch.classList.add('switch')
-	buttonRow.appendChild(toggleSwitch)
-
-	const checkbox = document.createElement('input')
-	checkbox.type = 'checkbox'
-	checkbox.checked = book.read
-	checkbox.dataset.book = book.id
-	toggleSwitch.appendChild(checkbox)
-
-	const slider = document.createElement('span')
-	slider.classList.add('slider')
-	toggleSwitch.appendChild(slider)
-}
-
-function displayLibrary(books) {
-	books.forEach(book => renderBook(book))
-}
