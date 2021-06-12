@@ -48,7 +48,7 @@ form.addEventListener('submit', e => {
 		// TODO Error-Handler
 		throw new Error('Eingabe enthält Fehler!')
 	}
-	snapshotLibrary = book.add(thisTitle, thisAuthor, thisPages, thisRead)
+	global.snapshotLibrary = book.add(thisTitle, thisAuthor, thisPages, thisRead)
 	thisTitle = ''
 	thisAuthor = ''
 	thisPages = ''
@@ -79,6 +79,6 @@ function Book(title, author, pages, read = false) {
 ################################*/
 
 ;(async function initializeApp() {
-	snapshotLibrary = await book.loadDB()
-	book.renderAll(snapshotLibrary)
+	global.snapshotLibrary = await book.loadDB()
+	book.renderAll(global.snapshotLibrary)
 })()
