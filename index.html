@@ -5,38 +5,48 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Project Library</title>
 		<link rel="stylesheet" href="style.css" />
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="//fonts.googleapis.com/css?family=Open+Sans"
+		/>
 		<script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-firestore.js"></script>
 	</head>
 	<body>
 		<div id="app">
-			<div id="error"></div>
 			<h1>myLibrary</h1>
-			<!-- TODO Implement form as modal -->
-			<div id="form-wrapper">
-				<form id="form" action="submit">
-					<div class="title">
-						<label for="title">Title</label>
-						<input id="title" name="name" type="text" />
-					</div>
-					<div class="author">
-						<label for="author">Author</label>
-						<input id="author" name="author" type="text" />
-					</div>
-					<div class="pages">
-						<label for="pages">Pages</label>
-						<input id="pages" name="pages" type="text" />
-					</div>
-					<div class="read">
-						<label for="read">Read</label>
-						<input id="read" name="read" type="checkbox" />
-					</div>
-					<button type="submit">Buch speichern</button>
-				</form>
+
+			<button id="modalButton">Open Modal</button>
+			<!-- TODO Form Styling -->
+			<div id="myModal" class="modal">
+				<div id="form-wrapper" class="modal-content">
+					<span class="close">&times;</span>
+					<form id="form" action="submit">
+						<div class="title">
+							<label for="title">Title</label>
+							<input id="title" name="name" type="text" />
+						</div>
+						<div class="author">
+							<label for="author">Author</label>
+							<input id="author" name="author" type="text" />
+						</div>
+						<div class="pages">
+							<label for="pages">Pages</label>
+							<input id="pages" name="pages" type="text" />
+						</div>
+						<div class="read">
+							<label for="read">Read</label>
+							<input id="read" name="read" type="checkbox" />
+						</div>
+						<button type="submit">Buch speichern</button>
+					</form>
+				</div>
 			</div>
+
 			<section id="library"></section>
 		</div>
 		<script src="firebase.js"></script>
+		<script src="app.js"></script>
 	</body>
-	<script src="app.js"></script>
 </html>

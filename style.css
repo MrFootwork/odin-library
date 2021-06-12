@@ -1,6 +1,6 @@
 body {
-  display: block;
-
+  display    : block;
+  font-family: 'Open Sans';
 }
 
 #app {
@@ -27,7 +27,7 @@ div {
 }
 
 .book {
-  background-color: rgb(87, 87, 87);
+  background-color: rgb(148, 148, 148);
   padding         : 1em;
   opacity         : 50%;
   border-radius   : 1rem;
@@ -37,11 +37,78 @@ div {
 
 }
 
-.book button {
-  width           : 15px;
-  height          : 15px;
-  background-color: rgb(255, 0, 0);
+.textRow {
+  display        : flex;
+  flex-direction : column;
+  align-items    : center;
+  justify-content: space-evenly;
+  margin         : 0;
+  cursor         : default
 }
+
+.buttonRow {
+  display        : flex;
+  align-items    : center;
+  justify-content: space-evenly;
+
+}
+
+.deleteButton {
+  background-color   : white;
+  background         : url(images/remove.png);
+  background-size    : cover;
+  background-repeat  : no-repeat;
+  background-position: center center;
+  cursor             : pointer;
+  width              : 3rem;
+  height             : 3rem;
+  border             : none;
+}
+
+/*################################
+#   Modal
+################################*/
+
+/* The Modal (background) */
+.modal {
+  display         : none;
+  margin          : 0;
+  position        : fixed;
+  z-index         : 1;
+  padding-top     : 100px;
+  left            : 0;
+  top             : 0;
+  width           : 100%;
+  height          : 100%;
+  overflow        : auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin          : auto;
+  padding         : 20px;
+  border          : 1px solid #888;
+  width           : 80%;
+}
+
+/* The Close Button */
+.close {
+  color      : #aaaaaa;
+  float      : right;
+  font-size  : 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color          : #000;
+  text-decoration: none;
+  cursor         : pointer;
+}
+
 
 /*################################
 #   Switches
