@@ -96,11 +96,10 @@ function resetDOMLibrary() {
 	}
 }
 
-async function initializeApp() {
+;(async function initializeApp() {
 	snapshotLibrary = await loadDB()
 	displayLibrary(snapshotLibrary)
-}
-initializeApp()
+})()
 
 /*################################
 #   DB Calls
