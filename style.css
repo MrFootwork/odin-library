@@ -127,8 +127,7 @@ div {
   font-size: 28px;
   font-weight: bold;
 }
-.modal .modal-content .close :hover,
-.modal .modal-content .close :focus {
+.modal .modal-content .close:hover, .modal .modal-content .close:focus {
   color: #000;
   text-decoration: none;
   cursor: pointer;
@@ -161,7 +160,7 @@ div {
   transition: 0.4s;
   border-radius: 34px;
 }
-.switch .slider :before {
+.switch .slider:before {
   position: absolute;
   content: "";
   height: 26px;
