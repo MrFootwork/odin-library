@@ -1,185 +1,188 @@
 body {
-  display    : block;
-  font-family: 'Open Sans';
+  display: block;
+  font-family: "Open Sans";
 }
 
 div {
-  margin: 1rem auto
+  margin: 1rem auto;
 }
 
 #input {
-  display: block
+  display: block;
 }
 
 #values {
-  display: block
+  display: block;
+}
+
+.button {
+  background-color: #4caf50;
+  border: medium solid #4caf50;
+  color: white;
+  padding: 0.8rem 1.6rem;
+  font-size: 1.2rem;
+  border-radius: 2rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.addBook:hover {
+  background-color: #fff;
+  color: #4caf50;
+  border: medium solid #4caf50;
+  transition: all 0.2s ease-in-out;
 }
 
 #library {
-  color          : #000;
-  display        : flex;
-  flex-wrap      : wrap;
+  color: #000;
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
 }
 
 .book {
-  background-color: rgb(148, 148, 148);
-  padding         : 1em;
-  opacity         : 50%;
-  border-radius   : 1rem;
-  margin          : 2rem;
-  height          : 20rem;
-  width           : 15rem;
-
+  background-color: #949494;
+  padding: 1em;
+  opacity: 50%;
+  border-radius: 1rem;
+  margin: 2rem;
+  height: 20rem;
+  width: 15rem;
 }
 
 .textRow {
-  display        : flex;
-  flex-direction : column;
-  align-items    : center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: space-evenly;
-  margin-top     : 2rem;
-  margin-bottom  : 4rem;
-  cursor         : default
+  margin-top: 2rem;
+  margin-bottom: 4rem;
+  cursor: default;
 }
-
 .textRow h2 {
-  margin: 1rem
+  margin: 1rem;
 }
-
 .textRow h3 {
-  margin: 0
+  margin: 0;
 }
 
 .buttonRow {
-  display        : flex;
-  align-items    : center;
+  display: flex;
+  align-items: center;
   justify-content: space-evenly;
-
 }
-
-.editButton {
-  background-color   : white;
-  background         : url(images/edit.png);
-  background-size    : cover;
-  background-repeat  : no-repeat;
+.buttonRow .editButton {
+  background: url(images/edit.png) no-repeat;
+  background-size: cover;
   background-position: center center;
-  cursor             : pointer;
-  width              : 3rem;
-  height             : 3rem;
-  border             : none;
+  cursor: pointer;
+  width: 3rem;
+  height: 3rem;
+  border: none;
 }
-
-.deleteButton {
-  background-color   : white;
-  background         : url(images/remove.png);
-  background-size    : cover;
-  background-repeat  : no-repeat;
+.buttonRow .deleteButton {
+  background: url(images/trash-outline.svg) no-repeat;
+  background-size: cover;
   background-position: center center;
-  cursor             : pointer;
-  width              : 3rem;
-  height             : 3rem;
-  border             : none;
+  cursor: pointer;
+  width: 3rem;
+  height: 3rem;
+  border: none;
+  display: flex;
+  justify-content: center;
 }
 
+/* .deleteIcon {
+  width : 3rem;
+  height: 3rem;
+  color : #000;
+} */
 /*################################
 #   Modal
 ################################*/
-
 /* The Modal (background) */
 .modal {
-  display         : none;
-  margin          : 0;
-  position        : fixed;
-  z-index         : 1;
-  padding-top     : 100px;
-  left            : 0;
-  top             : 0;
-  width           : 100%;
-  height          : 100%;
-  overflow        : auto;
-  background-color: rgb(0, 0, 0);
+  display: none;
+  margin: 0;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: black;
   background-color: rgba(0, 0, 0, 0.4);
 }
-
-/* Modal Content */
-.modal-content {
+.modal .modal-content {
   background-color: #fefefe;
-  margin          : auto;
-  padding         : 20px;
-  border          : 1px solid #888;
-  width           : 80%;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+.modal .modal-content .close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.modal .modal-content .close :hover,
+.modal .modal-content .close :focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 /* The Close Button */
-.close {
-  color      : #aaaaaa;
-  float      : right;
-  font-size  : 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color          : #000;
-  text-decoration: none;
-  cursor         : pointer;
-}
-
-
 /*################################
 #   Switches
 ################################*/
-
 .switch {
   position: relative;
-  display : inline-block;
-  width   : 60px;
-  height  : 34px;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
 }
-
 .switch input {
   opacity: 0;
-  width  : 0;
-  height : 0;
+  width: 0;
+  height: 0;
 }
-
-.slider {
-  position          : absolute;
-  cursor            : pointer;
-  top               : 0;
-  left              : 0;
-  right             : 0;
-  bottom            : 0;
-  background-color  : #ccc;
-  -webkit-transition: .4s;
-  transition        : .4s;
-  border-radius     : 34px;
+.switch .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 34px;
 }
-
-.slider:before {
-  position          : absolute;
-  content           : "";
-  height            : 26px;
-  width             : 26px;
-  left              : 4px;
-  bottom            : 4px;
-  background-color  : white;
-  -webkit-transition: .4s;
-  transition        : .4s;
-  border-radius     : 50%;
+.switch .slider :before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 50%;
 }
-
-input:checked+.slider {
-  background-color: #2196F3;
+.switch input:checked + .slider {
+  background-color: #2196f3;
 }
-
-input:focus+.slider {
-  box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked+.slider:before {
+.switch input:checked + .slider:before {
   -webkit-transform: translateX(26px);
-  -ms-transform    : translateX(26px);
-  transform        : translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
 }
+.switch input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+/*# sourceMappingURL=style.css.map */

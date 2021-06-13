@@ -1,18 +1,15 @@
 import { db } from './firebase.js'
 
 export async function loadDB() {
-	let dbLibrary = await db
-		.collection('library')
-		.get()
-		.then(snapshot => {
-			return snapshot.docs.reduce((library, doc) => {
-				library.push({
-					id: doc.id,
-					...doc.data(),
-				})
-				return library
-			}, [])
+	const snapshot = await db.collection('library').get()
+	const dbLibrary = snapshot.docs.reduce((library, doc) => {
+		//format array by adding firestore id as property
+		library.push({
+			id: doc.id,
+			...doc.data(),
 		})
+		return library
+	}, [])
 	return dbLibrary.sort((a, b) => {
 		if (a.title < b.title) return -1
 		if (b.title < a.title) return 1
@@ -92,6 +89,13 @@ export function render(book) {
 	deleteButton.dataset.book = book.id
 	deleteButton.classList.add('deleteButton')
 	buttonRow.appendChild(deleteButton)
+
+	//Trying to style the svg via CSS doesn't work
+	//so for now I load the image as background in .deleteButton
+	// const deleteIcon = document.createElement('img')
+	// deleteIcon.classList.add('deleteIcon')
+	// deleteIcon.src = './images/trash-outline.svg'
+	// deleteButton.appendChild(deleteIcon)
 }
 
 export function renderAll(books) {
