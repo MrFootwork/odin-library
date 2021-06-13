@@ -1,6 +1,6 @@
-import * as global from './global'
+import { db } from './firebase.js'
 
-async function loadDB() {
+export async function loadDB() {
 	let dbLibrary = await db
 		.collection('library')
 		.get()
@@ -20,33 +20,31 @@ async function loadDB() {
 	})
 }
 
-async function add(title, author, pages, read = false) {
+export async function add(title, author, pages, read = false) {
 	db.collection('library').add({
 		title,
 		author,
 		pages,
 		read,
 	})
-	snapshotLibrary = await loadDB()
+	const library = await loadDB()
 	resetDOMLibrary()
-	displayLibrary(snapshotLibrary)
-	modal.style.display = 'none'
+	renderAll(library)
+
 	//TODO kurzes Highlighting des neu hinzugefügten Buches
 }
 
-function updateRead(bookId, readState) {
+// TODO generalise update function
+export function update(bookId, readState) {
 	db.collection('library').doc(bookId).update({ read: readState })
 }
 
-function remove(bookId) {
+export function remove(bookId) {
 	db.collection('library').doc(bookId).delete()
-	snapshotLibrary.forEach((book, i) => {
-		if (book.id === bookId) snapshotLibrary.splice(i, 1)
-	})
 	document.getElementById(bookId).remove()
 }
 
-function render(book) {
+export function render(book) {
 	const bookCard = document.createElement('div')
 	bookCard.classList.add('book')
 	bookCard.id = book.id
@@ -70,16 +68,17 @@ function render(book) {
 	buttonRow.classList.add('buttonRow')
 	bookCard.appendChild(buttonRow)
 
-	const deleteButton = document.createElement('button')
-	deleteButton.dataset.book = book.id
-	deleteButton.classList.add('deleteButton')
-	buttonRow.appendChild(deleteButton)
+	const editButton = document.createElement('button')
+	editButton.dataset.book = book.id
+	editButton.classList.add('editButton')
+	buttonRow.appendChild(editButton)
 
 	const toggleSwitch = document.createElement('label')
 	toggleSwitch.classList.add('switch')
 	buttonRow.appendChild(toggleSwitch)
 
 	const checkbox = document.createElement('input')
+	checkbox.classList.add('checkboxRead')
 	checkbox.type = 'checkbox'
 	checkbox.checked = book.read
 	checkbox.dataset.book = book.id
@@ -88,15 +87,19 @@ function render(book) {
 	const slider = document.createElement('span')
 	slider.classList.add('slider')
 	toggleSwitch.appendChild(slider)
+
+	const deleteButton = document.createElement('button')
+	deleteButton.dataset.book = book.id
+	deleteButton.classList.add('deleteButton')
+	buttonRow.appendChild(deleteButton)
 }
 
-function renderAll(books) {
+export function renderAll(books) {
 	books.forEach(book => render(book))
 }
 
-function resetDOMLibrary() {
+export function resetDOMLibrary() {
 	while (library.lastElementChild) {
 		library.removeChild(library.lastElementChild)
 	}
 }
-export { loadDB, add, updateRead, remove, render, renderAll, resetDOMLibrary }

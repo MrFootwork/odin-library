@@ -1,21 +1,21 @@
-import * as global from './global'
-import * as book from './book.js'
+import GlobalVariableContainer from './global.js'
+import * as bookTools from './book.js'
 
+const globals = new GlobalVariableContainer()
 //TODO Authentication
 
 /*################################
 #   Modal
 ################################*/
-
-modalButton.onclick = function () {
-	modal.style.display = 'block'
+globals.modalButton.onclick = function () {
+	globals.modal.style.display = 'block'
 }
-span.onclick = function () {
-	modal.style.display = 'none'
+globals.closeModalButton.onclick = function () {
+	globals.modal.style.display = 'none'
 }
 window.onclick = function (event) {
-	if (event.target == modal) {
-		modal.style.display = 'none'
+	if (event.target == globals.modal) {
+		globals.modal.style.display = 'none'
 	}
 }
 
@@ -48,24 +48,42 @@ form.addEventListener('submit', e => {
 		// TODO Error-Handler
 		throw new Error('Eingabe enthält Fehler!')
 	}
-	global.snapshotLibrary = book.add(thisTitle, thisAuthor, thisPages, thisRead)
+	globals.snapshotLibrary = bookTools.add(
+		thisTitle,
+		thisAuthor,
+		thisPages,
+		thisRead
+	)
 	thisTitle = ''
 	thisAuthor = ''
 	thisPages = ''
 	thisRead = false
+	globals.modal.style.display = 'none'
 })
 
 library.addEventListener('click', e => {
 	const bookId = e.target.dataset.book
-	const element = e.target.tagName
-	if (element === 'BUTTON') {
-		if (bookId) book.remove(bookId)
+	const elementClass = e.target.classList[0]
+	if (elementClass === 'editButton') {
+		console.log('You want to edit?')
+		// TODO implement edit function
 	}
-	if (element === 'INPUT') {
+	if (elementClass === 'deleteButton') {
+		if (bookId) bookTools.remove(bookId)
+	}
+	if (elementClass === 'checkboxRead') {
 		const readState = e.target.checked
-		if (bookId) book.update(bookId, readState)
+		if (bookId) bookTools.update(bookId, readState)
 	}
 })
+
+/*################################
+#   UI
+################################*/
+;(async function initializeApp() {
+	globals.snapshotLibrary = await bookTools.loadDB()
+	bookTools.renderAll(globals.snapshotLibrary)
+})()
 
 function Book(title, author, pages, read = false) {
 	this.title = title
@@ -73,12 +91,3 @@ function Book(title, author, pages, read = false) {
 	this.pages = pages
 	this.read = read
 }
-
-/*################################
-#   UI
-################################*/
-
-;(async function initializeApp() {
-	global.snapshotLibrary = await book.loadDB()
-	book.renderAll(global.snapshotLibrary)
-})()

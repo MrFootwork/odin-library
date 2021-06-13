@@ -49,6 +49,18 @@ div {
 
 }
 
+.editButton {
+  background-color   : white;
+  background         : url(images/edit.png);
+  background-size    : cover;
+  background-repeat  : no-repeat;
+  background-position: center center;
+  cursor             : pointer;
+  width              : 3rem;
+  height             : 3rem;
+  border             : none;
+}
+
 .deleteButton {
   background-color   : white;
   background         : url(images/remove.png);

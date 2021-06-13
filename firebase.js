@@ -11,6 +11,6 @@ var firebaseConfig = {
 }
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig)
-const db = firebase.firestore()
+export const db = firebase.firestore()
 //without this, we get errors in the console
 db.settings({ timestampsInSnapshots: true })
