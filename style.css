@@ -1,6 +1,6 @@
 body {
   display: block;
-  font-family: "Open Sans";
+  font-family: 'Open Sans';
 }
 
 div {
@@ -21,80 +21,21 @@ div {
   border: medium solid #4caf50;
   padding: 0.8rem 1.6rem;
   font-size: 1.2rem;
+  -webkit-box-shadow: 0 0 20px #bbb;
+          box-shadow: 0 0 20px #bbb;
   border-radius: 2rem;
+  -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
+
 .button:hover {
   background-color: #4caf50;
   border: medium solid #4caf50;
   color: white;
+  -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
 
-#library {
-  color: #000;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.book {
-  background-color: #949494;
-  padding: 1em;
-  opacity: 50%;
-  border-radius: 1rem;
-  margin: 2rem;
-  height: 20rem;
-  width: 15rem;
-}
-
-.textRow {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  margin-top: 2rem;
-  margin-bottom: 4rem;
-  cursor: default;
-}
-.textRow h2 {
-  margin: 1rem;
-}
-.textRow h3 {
-  margin: 0;
-}
-
-.buttonRow {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-}
-.buttonRow .editButton {
-  background: url(images/edit.png) no-repeat;
-  background-size: cover;
-  background-position: center center;
-  cursor: pointer;
-  width: 3rem;
-  height: 3rem;
-  border: none;
-}
-.buttonRow .deleteButton {
-  background: url(images/trash-outline.svg) no-repeat;
-  background-size: cover;
-  background-position: center center;
-  cursor: pointer;
-  width: 3rem;
-  height: 3rem;
-  border: none;
-  display: flex;
-  justify-content: center;
-}
-
-/* .deleteIcon {
-  width : 3rem;
-  height: 3rem;
-  color : #000;
-} */
 .modal {
   display: none;
   margin: 0;
@@ -108,37 +49,213 @@ div {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.6);
 }
+
 .modal .modal-content {
-  background-color: #fefefe;
+  background-color: #ddd;
   margin: auto;
   padding: 20px;
-  border: 1px solid #888;
   width: 80%;
 }
+
 .modal .modal-content .close {
-  color: #aaaaaa;
+  color: #858585;
   position: relative;
   left: 95%;
   font-size: 28px;
   font-weight: bold;
 }
+
 .modal .modal-content .close:hover, .modal .modal-content .close:focus {
   color: #000;
   text-decoration: none;
   cursor: pointer;
 }
 
+.modal .modal-content #form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.modal .modal-content #form div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.modal .modal-content #form div label {
+  color: #495249;
+}
+
+.modal .modal-content #form div input {
+  background-color: #eee;
+  border: none;
+  border-bottom: 0.2rem solid #ccc;
+  height: 2rem;
+  width: 15rem;
+  padding: 0;
+  font: italic 1.8rem 'Cascadia Code';
+}
+
+.modal .modal-content #form div input:hover {
+  border-bottom: 0.2rem solid green;
+}
+
+.modal .modal-content #form div input:hover, .modal .modal-content #form div input:focus {
+  outline: none;
+}
+
+.modal .modal-content #form div input:focus {
+  border-bottom: 0.2rem solid green;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+.modal .modal-content #form div #pages {
+  font-style: normal;
+}
+
+.modal .modal-content #form .read {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.modal .modal-content #form .read label {
+  cursor: pointer;
+}
+
+.modal .modal-content #form .read input {
+  border: none;
+  height: 1rem;
+  width: 2rem;
+}
+
+.modal .modal-content #form .read input:hover, .modal .modal-content #form .read input:focus {
+  background-color: inherit;
+  outline: inherit;
+}
+
+#library {
+  color: #000;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.book {
+  background-color: #949494;
+  padding: 1em;
+  opacity: 50%;
+  border-radius: 1rem;
+  margin: 2rem;
+  height: 20rem;
+  width: 15rem;
+}
+
+.textRow {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  margin-top: 2rem;
+  margin-bottom: 4rem;
+  cursor: default;
+}
+
+.textRow h2 {
+  margin: 1rem;
+}
+
+.textRow h3 {
+  margin: 0;
+}
+
+.buttonRow {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+.buttonRow .editButton {
+  background: url(images/edit.png) no-repeat;
+  background-size: cover;
+  background-position: center center;
+  cursor: pointer;
+  width: 3rem;
+  height: 3rem;
+  border: none;
+}
+
+.buttonRow .deleteButton {
+  background: url(images/trash-outline.svg) no-repeat;
+  background-size: cover;
+  background-position: center center;
+  cursor: pointer;
+  width: 3rem;
+  height: 3rem;
+  border: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+/* .deleteIcon {
+  width : 3rem;
+  height: 3rem;
+  color : #000;
+} */
 .switch {
   position: relative;
   display: inline-block;
   width: 60px;
   height: 34px;
 }
-.switch input {
+
+.switch .checkboxRead {
   opacity: 0;
   width: 0;
   height: 0;
 }
+
 .switch .slider {
   position: absolute;
   cursor: pointer;
@@ -147,28 +264,35 @@ div {
   right: 0;
   bottom: 0;
   background-color: #ccc;
+  -webkit-transition: 0.4s;
   transition: 0.4s;
   border-radius: 34px;
 }
+
 .switch .slider:before {
   position: absolute;
-  content: "";
+  content: '';
   height: 26px;
   width: 26px;
   left: 4px;
   bottom: 4px;
   background-color: white;
+  -webkit-transition: 0.4s;
   transition: 0.4s;
   border-radius: 50%;
 }
-.switch input:checked + .slider {
+
+.switch .checkboxRead:checked + .slider {
   background-color: #2196f3;
 }
-.switch input:checked + .slider:before {
-  transform: translateX(26px);
-}
-.switch input:focus + .slider {
-  box-shadow: 0 0 1px #2196f3;
+
+.switch .checkboxRead:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+          transform: translateX(26px);
 }
 
+.switch .checkboxRead:focus + .slider {
+  -webkit-box-shadow: 0 0 1px #2196f3;
+          box-shadow: 0 0 1px #2196f3;
+}
 /*# sourceMappingURL=style.css.map */

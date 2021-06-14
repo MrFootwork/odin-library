@@ -21,6 +21,7 @@ div {
 	border: medium solid #4caf50;
 	padding: 0.8rem 1.6rem;
 	font-size: 1.2rem;
+	box-shadow: 0 0 20px #bbb;
 	border-radius: 2rem;
 	transition: all 0.2s ease-in-out;
 	&:hover {
@@ -28,6 +29,92 @@ div {
 		border: medium solid #4caf50;
 		color: white;
 		transition: all 0.2s ease-in-out;
+	}
+}
+
+.modal {
+	display: none;
+	margin: 0;
+	position: fixed;
+	z-index: 1;
+	padding-top: 100px;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.6);
+	.modal-content {
+		background-color: #ddd;
+		margin: auto;
+		padding: 20px;
+		width: 80%;
+		.close {
+			color: #858585;
+			position: relative;
+			left: 95%;
+			font-size: 28px;
+			font-weight: bold;
+			&:hover,
+			&:focus {
+				color: #000;
+				text-decoration: none;
+				cursor: pointer;
+			}
+		}
+		#form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+
+			div {
+				display: flex;
+				flex-direction: column;
+				label {
+					color: #495249;
+				}
+				input {
+					background-color: #eee;
+					border: none;
+					border-bottom: 0.2rem solid #ccc;
+					height: 2rem;
+					width: 15rem;
+					padding: 0;
+					font: italic 1.8rem 'Cascadia Code';
+					&:hover {
+						border-bottom: 0.2rem solid green;
+					}
+					&:hover,
+					&:focus {
+						outline: none;
+					}
+					&:focus {
+						border-bottom: 0.2rem solid green;
+						transition: all 0.2s ease-in-out;
+					}
+				}
+				#pages {
+					font-style: normal;
+				}
+			}
+			.read {
+				display: flex;
+				flex-direction: row;
+				label {
+					cursor: pointer;
+				}
+				input {
+					border: none;
+					height: 1rem;
+					width: 2rem;
+					&:hover,
+					&:focus {
+						background-color: inherit;
+						outline: inherit;
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -96,46 +183,12 @@ div {
   color : #000;
 } */
 
-.modal {
-	display: none;
-	margin: 0;
-	position: fixed;
-	z-index: 1;
-	padding-top: 100px;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	overflow: auto;
-	background-color: rgba(0, 0, 0, 0.6);
-	.modal-content {
-		background-color: #fefefe;
-		margin: auto;
-		padding: 20px;
-		border: 1px solid #888;
-		width: 80%;
-		.close {
-			color: #aaaaaa;
-			position: relative;
-			left: 95%;
-			font-size: 28px;
-			font-weight: bold;
-			&:hover,
-			&:focus {
-				color: #000;
-				text-decoration: none;
-				cursor: pointer;
-			}
-		}
-	}
-}
-
 .switch {
 	position: relative;
 	display: inline-block;
 	width: 60px;
 	height: 34px;
-	input {
+	.checkboxRead {
 		opacity: 0;
 		width: 0;
 		height: 0;
@@ -162,13 +215,13 @@ div {
 			border-radius: 50%;
 		}
 	}
-	input:checked + .slider {
+	.checkboxRead:checked + .slider {
 		background-color: #2196f3;
+		&:before {
+			transform: translateX(26px);
+		}
 	}
-	input:checked + .slider:before {
-		transform: translateX(26px);
-	}
-	input:focus + .slider {
+	.checkboxRead:focus + .slider {
 		box-shadow: 0 0 1px #2196f3;
 	}
 }
