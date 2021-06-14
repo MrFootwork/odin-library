@@ -21,7 +21,7 @@ div {
 	border: medium solid #4caf50;
 	padding: 0.8rem 1.6rem;
 	font-size: 1.2rem;
-	box-shadow: 0 0 20px #bbb;
+	box-shadow: 5px 5px 20px -13px #000;
 	border-radius: 2rem;
 	transition: all 0.2s ease-in-out;
 	&:hover {
@@ -33,7 +33,7 @@ div {
 }
 
 .modal {
-	display: none;
+	// display: none;
 	margin: 0;
 	position: fixed;
 	z-index: 1;
@@ -47,17 +47,19 @@ div {
 	.modal-content {
 		background-color: #ddd;
 		margin: auto;
-		padding: 20px;
-		width: 80%;
+		padding: 0;
+		padding-bottom: 2.5rem;
+		width: 40%;
+		min-width: 300px;
 		.close {
 			color: #858585;
 			position: relative;
-			left: 95%;
+			left: 90%;
 			font-size: 28px;
 			font-weight: bold;
 			&:hover,
 			&:focus {
-				color: #000;
+				color: rgb(128, 0, 0);
 				text-decoration: none;
 				cursor: pointer;
 			}
@@ -81,12 +83,14 @@ div {
 					width: 15rem;
 					padding: 0;
 					font: italic 1.8rem 'Cascadia Code';
+
 					&:hover {
 						border-bottom: 0.2rem solid green;
 					}
 					&:hover,
 					&:focus {
 						outline: none;
+						transform: scale(1.05);
 					}
 					&:focus {
 						border-bottom: 0.2rem solid green;
@@ -111,6 +115,7 @@ div {
 					&:focus {
 						background-color: inherit;
 						outline: inherit;
+						transform: scale(2);
 					}
 				}
 			}
@@ -126,13 +131,19 @@ div {
 }
 
 .book {
-	background-color: rgb(148, 148, 148);
-	padding: 1em;
-	opacity: 50%;
 	border-radius: 1rem;
 	margin: 2rem;
+	padding: 1em;
+	background-color: rgb(148, 148, 148);
+	box-shadow: 5px 5px 10px -4px;
+	opacity: 50%;
 	height: 20rem;
 	width: 15rem;
+	&:hover {
+		background-color: rgb(167, 167, 167);
+		transform: scale(1.05);
+		transition: all 0.1s ease-in-out;
+	}
 }
 
 .textRow {

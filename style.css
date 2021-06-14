@@ -21,8 +21,8 @@ div {
   border: medium solid #4caf50;
   padding: 0.8rem 1.6rem;
   font-size: 1.2rem;
-  -webkit-box-shadow: 0 0 20px #bbb;
-          box-shadow: 0 0 20px #bbb;
+  -webkit-box-shadow: 5px 5px 20px -13px #000;
+          box-shadow: 5px 5px 20px -13px #000;
   border-radius: 2rem;
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
@@ -37,7 +37,6 @@ div {
 }
 
 .modal {
-  display: none;
   margin: 0;
   position: fixed;
   z-index: 1;
@@ -53,20 +52,22 @@ div {
 .modal .modal-content {
   background-color: #ddd;
   margin: auto;
-  padding: 20px;
-  width: 80%;
+  padding: 0;
+  padding-bottom: 2.5rem;
+  width: 40%;
+  min-width: 300px;
 }
 
 .modal .modal-content .close {
   color: #858585;
   position: relative;
-  left: 95%;
+  left: 90%;
   font-size: 28px;
   font-weight: bold;
 }
 
 .modal .modal-content .close:hover, .modal .modal-content .close:focus {
-  color: #000;
+  color: maroon;
   text-decoration: none;
   cursor: pointer;
 }
@@ -114,6 +115,8 @@ div {
 
 .modal .modal-content #form div input:hover, .modal .modal-content #form div input:focus {
   outline: none;
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
 }
 
 .modal .modal-content #form div input:focus {
@@ -149,6 +152,8 @@ div {
 .modal .modal-content #form .read input:hover, .modal .modal-content #form .read input:focus {
   background-color: inherit;
   outline: inherit;
+  -webkit-transform: scale(2);
+          transform: scale(2);
 }
 
 #library {
@@ -164,13 +169,23 @@ div {
 }
 
 .book {
-  background-color: #949494;
-  padding: 1em;
-  opacity: 50%;
   border-radius: 1rem;
   margin: 2rem;
+  padding: 1em;
+  background-color: #949494;
+  -webkit-box-shadow: 5px 5px 10px -4px;
+          box-shadow: 5px 5px 10px -4px;
+  opacity: 50%;
   height: 20rem;
   width: 15rem;
+}
+
+.book:hover {
+  background-color: #a7a7a7;
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+  -webkit-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
 }
 
 .textRow {
