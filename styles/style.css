@@ -3,18 +3,6 @@ body {
   font-family: 'Open Sans';
 }
 
-div {
-  margin: 1rem auto;
-}
-
-#input {
-  display: block;
-}
-
-#values {
-  display: block;
-}
-
 .button {
   background-color: #fff;
   color: #4caf50;
@@ -56,6 +44,30 @@ div {
   padding-bottom: 2.5rem;
   width: 40%;
   min-width: 300px;
+  -webkit-animation: growModal 0.4s;
+          animation: growModal 0.4s;
+}
+
+@-webkit-keyframes growModal {
+  from {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  to {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes growModal {
+  from {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  to {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
 }
 
 .modal .modal-content .close {
@@ -178,14 +190,16 @@ div {
   opacity: 50%;
   height: 20rem;
   width: 15rem;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .book:hover {
   background-color: #a7a7a7;
   -webkit-transform: scale(1.05);
           transform: scale(1.05);
-  -webkit-transition: all 0.1s ease-in-out;
-  transition: all 0.1s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .textRow {
@@ -228,7 +242,7 @@ div {
 }
 
 .buttonRow .editButton {
-  background: url(images/edit.png) no-repeat;
+  background: url(../images/edit.png) no-repeat;
   background-size: cover;
   background-position: center center;
   cursor: pointer;
@@ -238,7 +252,7 @@ div {
 }
 
 .buttonRow .deleteButton {
-  background: url(images/trash-outline.svg) no-repeat;
+  background: url(../images/trash-outline.svg) no-repeat;
   background-size: cover;
   background-position: center center;
   cursor: pointer;

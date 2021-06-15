@@ -1,0 +1,114 @@
+#library {
+	color: #000;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.book {
+	border-radius: 1rem;
+	margin: 2rem;
+	padding: 1em;
+	background-color: rgb(148, 148, 148);
+	box-shadow: 5px 5px 10px -4px;
+	opacity: 50%;
+	height: 20rem;
+	width: 15rem;
+	transition: all 0.2s ease-in-out;
+	&:hover {
+		background-color: rgb(167, 167, 167);
+		transform: scale(1.05);
+		transition: all 0.2s ease-in-out;
+	}
+}
+
+.textRow {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-evenly;
+	margin-top: 2rem;
+	margin-bottom: 4rem;
+	cursor: default;
+	h2 {
+		margin: 1rem;
+	}
+	h3 {
+		margin: 0;
+	}
+}
+
+.buttonRow {
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	.editButton {
+		background: url(../images/edit.png) no-repeat;
+		background-size: cover;
+		background-position: center center;
+		cursor: pointer;
+		width: 3rem;
+		height: 3rem;
+		border: none;
+	}
+	.deleteButton {
+		background: url(../images/trash-outline.svg) no-repeat;
+		background-size: cover;
+		background-position: center center;
+		cursor: pointer;
+		width: 3rem;
+		height: 3rem;
+		border: none;
+		display: flex;
+		justify-content: center;
+	}
+}
+
+/* .deleteIcon {
+  width : 3rem;
+  height: 3rem;
+  color : #000;
+} */
+
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
+	.checkboxRead {
+		opacity: 0;
+		width: 0;
+		height: 0;
+	}
+	.slider {
+		position: absolute;
+		cursor: pointer;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: #ccc;
+		transition: 0.4s;
+		border-radius: 34px;
+		&:before {
+			position: absolute;
+			content: '';
+			height: 26px;
+			width: 26px;
+			left: 4px;
+			bottom: 4px;
+			background-color: white;
+			transition: 0.4s;
+			border-radius: 50%;
+		}
+	}
+	.checkboxRead:checked + .slider {
+		background-color: #2196f3;
+		&:before {
+			transform: translateX(26px);
+		}
+	}
+	.checkboxRead:focus + .slider {
+		box-shadow: 0 0 1px #2196f3;
+	}
+}
