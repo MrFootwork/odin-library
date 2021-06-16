@@ -14,7 +14,7 @@ globals.closeModalButton.onclick = function () {
 	globals.modal.style.display = 'none'
 }
 window.onclick = function (event) {
-	if (event.target == globals.modal) {
+	if (event.target === globals.modal) {
 		globals.modal.style.display = 'none'
 	}
 }
