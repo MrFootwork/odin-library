@@ -24,16 +24,24 @@ export async function add(title, author, pages, read = false) {
 		pages,
 		read,
 	})
-	const library = await loadDB()
-	resetDOMLibrary()
-	renderAll(library)
+	// const library = await loadDB()
+	// resetDOMLibrary()
+	// renderAll(library)
 
 	//TODO kurzes Highlighting des neu hinzugefügten Buches
 }
 
-// TODO generalise update function
-export function update(bookId, readState) {
+export function updateRead(bookId, readState) {
 	db.collection('library').doc(bookId).update({ read: readState })
+}
+
+export async function update(bookId, bookInfo) {
+	db.collection('library').doc(bookId).update({
+		title: bookInfo.title,
+		author: bookInfo.author,
+		pages: bookInfo.pages,
+		read: bookInfo.read,
+	})
 }
 
 export function remove(bookId) {

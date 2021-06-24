@@ -2,6 +2,8 @@ export default class {
 	constructor() {
 		//Data
 		this.snapshotLibrary = []
+		this.newBook = true
+		this.activeBookId = null
 
 		//HTML elements
 		this.library = document.getElementById('library')
@@ -15,5 +17,6 @@ export default class {
 		this.modal = document.getElementById('myModal')
 		this.modalButton = document.getElementById('modalButton')
 		this.closeModalButton = document.getElementsByClassName('close')[0]
+		this.submitButton = document.getElementById('formSubmit')
 	}
 }

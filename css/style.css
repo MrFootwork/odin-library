@@ -120,13 +120,13 @@
   opacity: 50%;
   height: 20rem;
   width: 15rem;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.1s ease-in-out;
 }
 .book:hover {
   transform: scale(1.05);
   background-color: #aaa;
   box-shadow: 10px 10px 30px -8px;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.1s ease-in-out;
 }
 .book .textRow {
   display: flex;

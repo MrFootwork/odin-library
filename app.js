@@ -3,6 +3,7 @@ import * as bookTools from './book.js'
 
 const globals = new GlobalVariableContainer()
 //TODO Authentication
+//TODO Kann man meine Bücher-ID-Übergabe optimieren?
 
 /*################################
 #   Modal
@@ -48,42 +49,67 @@ form.addEventListener('submit', e => {
 		// TODO Error-Handler
 		throw new Error('Eingabe enthält Fehler!')
 	}
-	globals.snapshotLibrary = bookTools.add(
-		thisTitle,
-		thisAuthor,
-		thisPages,
-		thisRead
-	)
-	thisTitle = ''
-	thisAuthor = ''
-	thisPages = ''
-	thisRead = false
+	if (globals.newBook) {
+		bookTools.add(thisTitle, thisAuthor, thisPages, thisRead)
+	} else {
+		bookTools.update(globals.activeBookId, {
+			//TODO Update rendert verzögert...
+			title: thisTitle,
+			author: thisAuthor,
+			pages: thisPages,
+			read: thisRead,
+		})
+		globals.newBook = true
+	}
+
 	globals.modal.style.display = 'none'
+	title.value = ''
+	author.value = ''
+	pages.value = ''
+	read.checked = false
+	globals.submitButton.innerText = 'Buch speichern'
+	globals.activeBookId = null
+	initializeApp()
 })
 
 library.addEventListener('click', e => {
 	const bookId = e.target.dataset.book
+	const lib = globals.snapshotLibrary
+	const bookIndex = lib.findIndex(book => book.id === bookId)
 	const elementClass = e.target.classList[0]
 	if (elementClass === 'editButton') {
-		console.log('You want to edit?')
-		// TODO implement edit function
+		if (bookId) {
+			globals.activeBookId = bookId
+			globals.newBook = false
+			globals.title.value = lib[bookIndex].title
+			globals.author.value = lib[bookIndex].author
+			globals.pages.value = lib[bookIndex].pages
+			globals.read.checked = lib[bookIndex].read
+			globals.submitButton.innerText = 'Buch ändern'
+			globals.modal.style.display = 'block'
+		}
 	}
 	if (elementClass === 'deleteButton') {
 		if (bookId) bookTools.remove(bookId)
 	}
 	if (elementClass === 'checkboxRead') {
 		const readState = e.target.checked
-		if (bookId) bookTools.update(bookId, readState)
+		if (bookId) {
+			bookTools.updateRead(bookId, readState)
+			lib[bookIndex].read = readState
+		}
 	}
 })
 
 /*################################
 #   UI
 ################################*/
-;(async function initializeApp() {
+async function initializeApp() {
 	globals.snapshotLibrary = await bookTools.loadDB()
+	bookTools.resetDOMLibrary()
 	bookTools.renderAll(globals.snapshotLibrary)
-})()
+}
+initializeApp()
 
 function Book(title, author, pages, read = false) {
 	this.title = title
