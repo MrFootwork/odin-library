@@ -1,7 +1,6 @@
 export default class {
 	constructor() {
 		//Data
-		this.snapshotLibrary = []
 		this.newBook = true
 		this.activeBookId = null
 
