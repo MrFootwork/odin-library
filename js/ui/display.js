@@ -1,4 +1,7 @@
 export default class Display {
+	constructor() {
+		this.modalButton = document.getElementById('modalButton')
+	}
 	renderAll(books) {
 		books.forEach(book => this.render(book))
 	}
