@@ -8,6 +8,7 @@ body {
 	display: block;
 	margin: 0;
 	font-family: 'Open Sans';
+	box-sizing: border-box;
 }
 
 .navbar {
@@ -37,6 +38,7 @@ body {
 	border-radius: 2rem;
 	transition: all 0.2s ease-in-out;
 	color: green;
+	cursor: pointer;
 	&:hover {
 		background-color: #4caf50;
 		border: medium solid #4caf50;

@@ -1,12 +1,26 @@
 export default class Form {
-	constructor() {
+	constructor(library) {
+		this.library = library
+		this.openModalButton = document.getElementById('modalButton')
+		this.newBook = true
+
+		// modal elements
+		this.form = document.getElementById('form')
 		this.modal = document.getElementById('myModal')
 		this.closeModalButton = document.getElementsByClassName('close')[0]
 		this.submitButton = document.getElementById('formSubmit')
+
+		// input fields
+		this.title = document.getElementById('title')
+		this.author = document.getElementById('author')
+		this.pages = document.getElementById('pages')
+		this.read = document.getElementById('read')
 	}
-	submitForm() {
-		form.addEventListener('submit', formHandler)
-		function formHandler(e) {
+
+	submitForm = function () {
+		this.form.addEventListener('submit', formHandler)
+		formHandler = e => {
+			console.log('clicked on submit')
 			e.preventDefault()
 			let thisTitle = title.value
 			let thisAuthor = author.value
@@ -42,17 +56,43 @@ export default class Form {
 		}
 	}
 
-	setModalEvents = () => {
-		// this.globals.modalButton.onclick = function () {
-		// 	this.globals.modal.style.display = 'block'
-		// }
-		// this.globals.closeModalButton.onclick = function () {
-		// 	this.globals.modal.style.display = 'none'
-		// }
-		window.onclick = function (event) {
-			console.log(this.modal)
+	setModalListeners = function () {
+		this.openModalButton.onclick = () => {
+			this.modal.style.display = 'block'
+		}
+
+		this.closeModalButton.onclick = () => {
+			this.modal.style.display = 'none'
+		}
+
+		window.onclick = event => {
 			if (event.target === this.modal) {
 				this.modal.style.display = 'none'
+			}
+		}
+
+		this.submitButton.onclick = event => {
+			event.preventDefault()
+			const title = this.title.value
+			const author = this.author.value
+			const pages = this.pages.value
+			const read = this.read.checked
+			const inputsAreValid = this.validateInput(title, author, pages)
+			if (!inputsAreValid) {
+				// TODO Error-Handler
+				throw new Error('Eingabe enthält Fehler!')
+			}
+			if (this.newBook) {
+				this.library.add(title, author, pages, read)
+			} else {
+				bookTools.update(globals.activeBookId, {
+					//TODO Update rendert verzögert...
+					title: thisTitle,
+					author: thisAuthor,
+					pages: thisPages,
+					read: thisRead,
+				})
+				globals.newBook = true
 			}
 		}
 	}
@@ -61,9 +101,9 @@ export default class Form {
 		const titleIsValid = /\w+/.test(title)
 		const authorIsValid = /\w+/.test(author)
 		const pagesIsValid = /\d+/.test(pages)
-		console.log('titleIsValid: ', titleIsValid)
-		console.log('authorIsValid: ', authorIsValid)
-		console.log('pagesIsValid: ', pagesIsValid)
+		if (!titleIsValid) throw new Error('Titel muss Wörter enthalten!')
+		if (!authorIsValid) throw new Error('Author muss Wörter enthalten!')
+		if (!pagesIsValid) throw new Error('Seitenanzahl muss Zahlen enthalten!')
 		return titleIsValid && authorIsValid && pagesIsValid
 	}
 }
