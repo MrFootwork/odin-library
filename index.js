@@ -14,7 +14,7 @@ const form = new Form(library)
 //TODO Kann man meine Bücher-ID-Übergabe optimieren?
 
 async function initializeApp() {
-	const lib = await library.loadDB(db)
+	const lib = await library.loadDB()
 	display.resetDOMLibrary()
 	display.renderAll(lib)
 	form.setModalListeners()
