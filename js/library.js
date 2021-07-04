@@ -1,6 +1,7 @@
 export default class Library {
-	constructor() {
-		var snapshotLibrary = []
+	constructor(database) {
+		this.database = database
+		this.snapshotLibrary = []
 	}
 
 	async loadDB(db) {

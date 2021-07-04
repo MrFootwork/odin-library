@@ -83,6 +83,8 @@ export default class Form {
 				throw new Error('Eingabe enthält Fehler!')
 			}
 			if (this.newBook) {
+				console.log('input: ', title, author, pages, read)
+				console.log('object: ', this.library)
 				this.library.add(title, author, pages, read)
 			} else {
 				bookTools.update(globals.activeBookId, {

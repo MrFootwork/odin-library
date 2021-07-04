@@ -8,7 +8,7 @@ import Book from './js/book.js'
 
 const globals = new GlobalVariableContainer()
 const display = new Display()
-const library = new Library()
+const library = new Library(db)
 const form = new Form(library)
 //TODO Authentication
 //TODO Kann man meine Bücher-ID-Übergabe optimieren?
