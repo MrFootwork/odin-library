@@ -7,16 +7,16 @@ import Library from './js/library.js'
 import Book from './js/book.js'
 
 const globals = new GlobalVariableContainer()
-const display = new Display()
-const library = new Library(db)
+const displayController = new Display()
+const library = new Library(db, displayController)
 const form = new Form(library)
 //TODO Authentication
 //TODO Kann man meine Bücher-ID-Übergabe optimieren?
 
 async function initializeApp() {
 	const lib = await library.loadDB()
-	display.resetDOMLibrary()
-	display.renderAll(lib)
+	displayController.resetDOMLibrary()
+	displayController.renderAll(lib)
 	form.setModalListeners()
 }
 initializeApp()

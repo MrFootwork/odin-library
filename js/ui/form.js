@@ -87,8 +87,9 @@ export default class Form {
 				console.log('object: ', this.library)
 				this.library.add(title, author, pages, read)
 			} else {
+				//TODO make update work!
 				bookTools.update(globals.activeBookId, {
-					//TODO Update rendert verzögert...
+					//TODO Update rendert 🐞🐞🐞...
 					title: thisTitle,
 					author: thisAuthor,
 					pages: thisPages,
@@ -96,6 +97,14 @@ export default class Form {
 				})
 				globals.newBook = true
 			}
+			this.modal.style.display = 'none'
+			this.title.value = ''
+			this.author.value = ''
+			this.pages.value = ''
+			this.read.checked = false
+			this.submitButton.innerText = 'Buch speichern'
+			// this.activeBookId = null
+			// initializeApp()
 		}
 	}
 

@@ -1,17 +1,18 @@
 export default class Library {
-	constructor(database) {
+	constructor(database, displayController) {
 		this.database = database
+		this.display = displayController
 		this.librarySnapshot = []
 	}
 
 	async loadDB() {
 		const snapshot = await this.database.collection('library').get()
-		const dbLibrary = this.#processSnapshot(snapshot)
-		this.librarySnapshot = this.#sortBooks(dbLibrary)
+		const libraryJSON = this.#makeJSON(snapshot)
+		this.librarySnapshot = this.#sortBooks(libraryJSON)
 		return this.librarySnapshot
 	}
 
-	#processSnapshot(snapshot) {
+	#makeJSON(snapshot) {
 		return snapshot.docs.reduce((library, doc) => {
 			library.push({
 				id: doc.id,
@@ -21,8 +22,8 @@ export default class Library {
 		}, [])
 	}
 
-	#sortBooks(dbLibrary) {
-		return dbLibrary.sort((a, b) => {
+	#sortBooks(libraryJSON) {
+		return libraryJSON.sort((a, b) => {
 			if (a.title < b.title) return -1
 			if (a.title > b.title) return 1
 			return 0
@@ -30,17 +31,33 @@ export default class Library {
 	}
 
 	async add(title, author, pages, read = false) {
-		this.database.collection('library').add({
+		let docRef = await this.#addBookToDB(title, author, pages, read)
+		let id = docRef.id
+		const newBook = this.#addBookToSnapshot(id, title, author, pages, read)
+		this.display.render(newBook)
+
+		//TODO kurzes Highlighting des neu hinzugefügten Buches
+	}
+
+	#addBookToDB(title, author, pages, read) {
+		return this.database.collection('library').add({
 			title,
 			author,
 			pages,
 			read,
 		})
-		// const library = await loadDB()
-		// resetDOMLibrary()
-		// renderAll(library)
+	}
 
-		//TODO kurzes Highlighting des neu hinzugefügten Buches
+	#addBookToSnapshot(id, title, author, pages, read) {
+		const book = {
+			id,
+			title,
+			author,
+			pages,
+			read,
+		}
+		this.librarySnapshot.push(book)
+		return book
 	}
 
 	remove(bookId) {
