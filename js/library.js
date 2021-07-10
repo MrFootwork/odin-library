@@ -1,15 +1,25 @@
+import { db } from './firebase.js'
+import Book from './book.js'
+
 export default class Library {
-	constructor(database, displayController) {
-		this.database = database
-		this.display = displayController
-		this.librarySnapshot = []
+	constructor() {
+		this.database = db
+		this.allBooks = []
+		this.dbBookIDs = []
+		this.libraryDOM = document.getElementById('library')
+		this.init()
 	}
 
-	async loadDB() {
+	get books() {
+		return this.allBooks
+	}
+
+	async init() {
 		const snapshot = await this.database.collection('library').get()
 		const libraryJSON = this.#makeJSON(snapshot)
-		this.librarySnapshot = this.#sortBooks(libraryJSON)
-		return this.librarySnapshot
+		const dbBookList = this.#sortBooks(libraryJSON)
+		this.dbBookIDs = this.#createIdList(snapshot)
+		this.allBooks = dbBookList.map(dbBook => new Book(dbBook))
 	}
 
 	#makeJSON(snapshot) {
@@ -30,38 +40,54 @@ export default class Library {
 		})
 	}
 
-	async add(title, author, pages, read = false) {
-		let docRef = await this.#addBookToDB(title, author, pages, read)
-		let id = docRef.id
-		const newBook = this.#addBookToSnapshot(id, title, author, pages, read)
-		this.display.render(newBook)
-
-		//TODO kurzes Highlighting des neu hinzugefügten Buches
+	#createIdList(snapshot) {
+		return snapshot.docs.reduce((idList, doc) => {
+			idList.push(doc.id)
+			return idList
+		}, [])
 	}
 
-	#addBookToDB(title, author, pages, read) {
-		return this.database.collection('library').add({
-			title,
-			author,
-			pages,
-			read,
-		})
-	}
-
-	#addBookToSnapshot(id, title, author, pages, read) {
-		const book = {
-			id,
-			title,
-			author,
-			pages,
-			read,
+	add(book) {
+		const dbBook = {
+			id: book.id,
+			title: book.title,
+			author: book.author,
+			pages: book.pages,
+			read: book.read,
 		}
-		this.librarySnapshot.push(book)
-		return book
+		this.#addBookToDB(dbBook)
+		this.#addBookToList(book)
+	}
+
+	#addBookToDB(book) {
+		return this.database.collection('library').add(book)
+	}
+
+	#addBookToList(book) {
+		this.allBooks.push(book)
 	}
 
 	remove(bookId) {
 		db.collection('library').doc(bookId).delete()
 		document.getElementById(bookId).remove()
+	}
+
+	renderAll(librarySnapshot) {
+		librarySnapshot.forEach(book => {
+			console.log(book)
+			// book.render()
+		})
+	}
+
+	async resetLibrary() {
+		let lastChild = this.allBooks.length - 1
+		while (this.allBooks[lastChild]) {
+			this.libraryDOM.removeChild(this.libraryDOM.lastElementChild)
+			this.allBooks.splice(lastChild)
+			await this.database
+				.collection('library')
+				.doc(this.dbBookIDs[lastChild--])
+				.delete()
+		}
 	}
 }
