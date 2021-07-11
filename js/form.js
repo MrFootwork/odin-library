@@ -3,7 +3,7 @@ import Book from './book.js'
 export default class Form {
 	constructor(library) {
 		this.library = library
-		this.newBook = true
+		this.addBookMode = true
 
 		// modal elements
 		this.form = document.getElementById('form')
@@ -22,20 +22,18 @@ export default class Form {
 		this.closeModalButton.onclick = this.#closeModal
 	}
 
-	#closeModal = e => {
-		console.log('I want to close')
-		const closerDomIDs = ['myModal', 'closeModalButton']
-		if (closerDomIDs.includes(e.target.id)) {
-			this.modal.style.display = 'none'
-			this.closeModalButton.onclick = null
-		}
-	}
-
-	showModal = e => {
+	showModal = () => {
 		this.modal.style.display = 'block'
 		this.submitButton.onclick = this.#submitBook
-		this.closeModalButton.onclick = this.#closeModal
 		this.modal.onclick = this.#closeModal
+	}
+
+	#closeModal = e => {
+		const closerDomIDs = [this.modal.id, this.closeModalButton.id]
+		if (closerDomIDs.includes(e.target.id)) {
+			this.modal.style.display = 'none'
+			this.modal.onclick = null
+		}
 	}
 
 	#submitBook = e => {
@@ -44,25 +42,25 @@ export default class Form {
 		const author = this.author.value
 		const pages = this.pages.value
 		const read = this.read.checked
-		const inputsAreValid = this.validateInput(title, author, pages)
+		// const inputsAreValid = this.validateInput(title, author, pages)
+		const inputsAreValid = true
 		if (!inputsAreValid) {
 			// TODO Error-Handler
 			throw new Error('Eingabe enthält Fehler!')
 		}
-		if (this.newBook) {
-			console.log('input: ', title, author, pages, read)
-			console.log('object: ', this.library)
-			this.library.add({ title, author, pages, read })
+		if (this.addBookMode) {
+			const bookToAdd = {
+				title,
+				author,
+				pages,
+				read,
+				library: this.library,
+			}
+			const newBook = new Book(bookToAdd)
+			this.library.add(newBook)
+			newBook.render()
 		} else {
-			// //TODO make update work!
-			// bookTools.update(globals.activeBookId, {
-			// 	//TODO Update rendert 🐞🐞🐞...
-			// 	title: thisTitle,
-			// 	author: thisAuthor,
-			// 	pages: thisPages,
-			// 	read: thisRead,
-			// })
-			// globals.newBook = true
+			//process for update methods of book
 		}
 		this.modal.style.display = 'none'
 		this.title.value = ''
@@ -70,85 +68,6 @@ export default class Form {
 		this.pages.value = ''
 		this.read.checked = false
 		this.submitButton.innerText = 'Buch speichern'
-		// this.activeBookId = null
-		// initializeApp()
-	}
-
-	// submitForm = function () {
-	// 	this.form.addEventListener('submit', formHandler)
-	// 	formHandler = e => {
-	// 		console.log('clicked on submit')
-	// 		e.preventDefault()
-	// 		let thisTitle = title.value
-	// 		let thisAuthor = author.value
-	// 		let thisPages = pages.value
-	// 		let thisRead = read.checked
-
-	// 		const inputsAreValid = validateInput(thisTitle, thisAuthor, thisPages)
-	// 		if (!inputsAreValid) {
-	// 			// TODO Error-Handler
-	// 			throw new Error('Eingabe enthält Fehler!')
-	// 		}
-	// 		if (globals.newBook) {
-	// 			bookTools.add(thisTitle, thisAuthor, thisPages, thisRead)
-	// 		} else {
-	// 			bookTools.update(globals.activeBookId, {
-	// 				//TODO Update rendert verzögert...
-	// 				title: thisTitle,
-	// 				author: thisAuthor,
-	// 				pages: thisPages,
-	// 				read: thisRead,
-	// 			})
-	// 			globals.newBook = true
-	// 		}
-
-	// 		globals.modal.style.display = 'none'
-	// 		title.value = ''
-	// 		author.value = ''
-	// 		pages.value = ''
-	// 		read.checked = false
-	// 		globals.submitButton.innerText = 'Buch speichern'
-	// 		globals.activeBookId = null
-	// 		initializeApp()
-	// 	}
-	// }
-
-	setModalListeners = function () {
-		this.submitButton.onclick = event => {
-			event.preventDefault()
-			const title = this.title.value
-			const author = this.author.value
-			const pages = this.pages.value
-			const read = this.read.checked
-			const inputsAreValid = this.validateInput(title, author, pages)
-			if (!inputsAreValid) {
-				// TODO Error-Handler
-				throw new Error('Eingabe enthält Fehler!')
-			}
-			if (this.newBook) {
-				console.log('input: ', title, author, pages, read)
-				console.log('object: ', this.library)
-				this.library.add(title, author, pages, read)
-			} else {
-				// //TODO make update work!
-				// bookTools.update(globals.activeBookId, {
-				// 	//TODO Update rendert 🐞🐞🐞...
-				// 	title: thisTitle,
-				// 	author: thisAuthor,
-				// 	pages: thisPages,
-				// 	read: thisRead,
-				// })
-				// globals.newBook = true
-			}
-			this.modal.style.display = 'none'
-			this.title.value = ''
-			this.author.value = ''
-			this.pages.value = ''
-			this.read.checked = false
-			this.submitButton.innerText = 'Buch speichern'
-			// this.activeBookId = null
-			// initializeApp()
-		}
 	}
 
 	validateInput(title, author, pages) {

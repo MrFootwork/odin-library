@@ -3,11 +3,10 @@ import Book from './book.js'
 
 export default class Library {
 	constructor() {
-		this.database = db
 		this.allBooks = []
 		this.dbBookIDs = []
 		this.libraryDOM = document.getElementById('library')
-		this.init()
+		this.libraryDOM.onclick = this.init()
 	}
 
 	get books() {
@@ -15,11 +14,13 @@ export default class Library {
 	}
 
 	async init() {
-		const snapshot = await this.database.collection('library').get()
+		const snapshot = await db.collection('library').get()
 		const libraryJSON = this.#makeJSON(snapshot)
 		const dbBookList = this.#sortBooks(libraryJSON)
 		this.dbBookIDs = this.#createIdList(snapshot)
-		this.allBooks = dbBookList.map(dbBook => new Book(dbBook))
+		this.allBooks = dbBookList.map(dbBook => this.#createBookFromDB(dbBook))
+		console.log('allBooks: ', this.allBooks)
+		console.log('dbBookIDs: ', this.dbBookIDs)
 	}
 
 	#makeJSON(snapshot) {
@@ -33,6 +34,7 @@ export default class Library {
 	}
 
 	#sortBooks(libraryJSON) {
+		return libraryJSON
 		return libraryJSON.sort((a, b) => {
 			if (a.title < b.title) return -1
 			if (a.title > b.title) return 1
@@ -45,6 +47,13 @@ export default class Library {
 			idList.push(doc.id)
 			return idList
 		}, [])
+	}
+
+	#createBookFromDB(dbBook) {
+		const bookToAdd = { ...dbBook, library: this }
+		const newBook = new Book(bookToAdd)
+		newBook.render()
+		return newBook
 	}
 
 	add(book) {
@@ -60,16 +69,18 @@ export default class Library {
 	}
 
 	#addBookToDB(book) {
-		return this.database.collection('library').add(book)
+		return db.collection('library').add(book)
 	}
 
 	#addBookToList(book) {
 		this.allBooks.push(book)
 	}
 
-	remove(bookId) {
-		db.collection('library').doc(bookId).delete()
-		document.getElementById(bookId).remove()
+	remove(bookToDelete) {
+		const bookIndex = this.allBooks.findIndex(book => bookToDelete == book)
+		const dbBookId = this.dbBookIDs[bookIndex]
+		db.collection('library').doc(dbBookId).delete()
+		bookToDelete.bookCard.remove()
 	}
 
 	renderAll(librarySnapshot) {
@@ -84,7 +95,7 @@ export default class Library {
 		while (this.allBooks[lastChild]) {
 			this.libraryDOM.removeChild(this.libraryDOM.lastElementChild)
 			this.allBooks.splice(lastChild)
-			await this.database
+			await db
 				.collection('library')
 				.doc(this.dbBookIDs[lastChild--])
 				.delete()

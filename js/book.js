@@ -1,18 +1,16 @@
 export default class Book {
-	constructor({ title, author, pages, read, id = null }) {
+	constructor({ title, author, pages, read, id = null, library }) {
 		this.title = title
 		this.author = author
 		this.pages = pages
 		this.read = read
 
-		if (!id) {
-			this.id = this.createId()
-		} else {
-			console.log(this)
-			// this.id = id
-			// this.dbBook = db.collection('library').doc(this.id)
-		}
+		this.id = id ? id : this.createId()
+
+		this.library = library
 	}
+
+	bookCard
 
 	createId() {
 		return '_' + Math.random().toString(36).substr(2, 9)
@@ -22,10 +20,12 @@ export default class Book {
 		return this
 	}
 
+	//template
 	updateRead(bookId, readState) {
 		db.collection('library').doc(bookId).update({ read: readState })
 	}
 
+	//template
 	update(bookId, bookInfo) {
 		db.collection('library').doc(bookId).update({
 			title: bookInfo.title,
@@ -35,6 +35,7 @@ export default class Book {
 		})
 	}
 
+	//template
 	addListener() {
 		library.addEventListener('click', e => {
 			const bookId = e.target.dataset.book
@@ -55,10 +56,6 @@ export default class Book {
 				}
 			}
 
-			if (elementClass === 'deleteButton') {
-				if (bookId) bookTools.remove(bookId)
-			}
-
 			if (elementClass === 'checkboxRead') {
 				const readState = e.target.checked
 				if (bookId) {
@@ -69,11 +66,26 @@ export default class Book {
 		})
 	}
 
-	render(book) {
+	#editBook = e => {
+		console.log('want to edit?', this.id)
+		console.log(e.target)
+	}
+
+	#deleteBook = () => {
+		this.library.remove(this)
+	}
+
+	#toggleRead = e => {
+		console.log('want to toggle?', this.id)
+		console.log(e.target)
+	}
+
+	render() {
 		const bookCard = document.createElement('div')
+		this.bookCard = bookCard
 		bookCard.classList.add('book')
-		bookCard.id = book.id
-		library.appendChild(bookCard)
+		bookCard.id = this.id
+		this.library.libraryDOM.appendChild(bookCard)
 
 		const textRow = document.createElement('div')
 		textRow.classList.add('textRow')
@@ -82,9 +94,9 @@ export default class Book {
 		const title = document.createElement('h2')
 		const author = document.createElement('h3')
 		const pages = document.createElement('h3')
-		title.innerHTML = `${book.title}`
-		author.innerHTML = `written by ${book.author}`
-		pages.innerHTML = `${book.pages} pages`
+		title.innerHTML = `${this.title}`
+		author.innerHTML = `written by ${this.author}`
+		pages.innerHTML = `${this.pages} pages`
 		textRow.appendChild(title)
 		textRow.appendChild(author)
 		textRow.appendChild(pages)
@@ -94,8 +106,9 @@ export default class Book {
 		bookCard.appendChild(buttonRow)
 
 		const editButton = document.createElement('button')
-		editButton.dataset.book = book.id
+		editButton.dataset.book = this.id
 		editButton.classList.add('editButton')
+		editButton.onclick = this.#editBook
 		buttonRow.appendChild(editButton)
 
 		const toggleSwitch = document.createElement('label')
@@ -105,8 +118,9 @@ export default class Book {
 		const checkbox = document.createElement('input')
 		checkbox.classList.add('checkboxRead')
 		checkbox.type = 'checkbox'
-		checkbox.checked = book.read
-		checkbox.dataset.book = book.id
+		checkbox.checked = this.read
+		checkbox.dataset.book = this.id
+		checkbox.onchange = this.#toggleRead
 		toggleSwitch.appendChild(checkbox)
 
 		const slider = document.createElement('span')
@@ -114,8 +128,9 @@ export default class Book {
 		toggleSwitch.appendChild(slider)
 
 		const deleteButton = document.createElement('button')
-		deleteButton.dataset.book = book.id
+		deleteButton.dataset.book = this.id
 		deleteButton.classList.add('deleteButton')
+		deleteButton.onclick = this.#deleteBook
 		buttonRow.appendChild(deleteButton)
 	}
 }
