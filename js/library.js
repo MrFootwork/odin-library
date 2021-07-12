@@ -9,6 +9,10 @@ export default class Library {
 		this.libraryDOM.onclick = this.init()
 	}
 
+	test() {
+		console.log('test')
+	}
+
 	get books() {
 		return this.allBooks
 	}
@@ -21,6 +25,7 @@ export default class Library {
 		this.allBooks = dbBookList.map(dbBook => this.#createBookFromDB(dbBook))
 		console.log('allBooks: ', this.allBooks)
 		console.log('dbBookIDs: ', this.dbBookIDs)
+		console.log(this.allBooks[1].bookCard)
 	}
 
 	#makeJSON(snapshot) {
@@ -64,7 +69,8 @@ export default class Library {
 			pages: book.pages,
 			read: book.read,
 		}
-		this.#addBookToDB(dbBook)
+		const addBookReturn = this.#addBookToDB(dbBook)
+		addBookReturn.then(docRef => console.log(docRef.id))
 		this.#addBookToList(book)
 	}
 

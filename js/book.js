@@ -72,7 +72,10 @@ export default class Book {
 	}
 
 	#deleteBook = () => {
-		this.library.remove(this)
+		// this.library.remove(this)
+		this.library.test()
+		console.log(libraryTEST)
+		console.log('global: ', global)
 	}
 
 	#toggleRead = e => {

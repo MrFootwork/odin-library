@@ -5,22 +5,21 @@ export default class Form {
 		this.library = library
 		this.addBookMode = true
 
-		// modal elements
-		this.form = document.getElementById('form')
-		this.modal = document.getElementById('myModal')
-		this.closeModalButton = document.getElementById('closeModalButton')
-		this.submitButton = document.getElementById('formSubmit')
-
-		// input fields
-		this.title = document.getElementById('title')
-		this.author = document.getElementById('author')
-		this.pages = document.getElementById('pages')
-		this.read = document.getElementById('read')
-
 		//listener
 		this.submitButton.onclick = this.#submitBook
 		this.closeModalButton.onclick = this.#closeModal
 	}
+
+	// modal elements
+	form = document.getElementById('form')
+	modal = document.getElementById('myModal')
+	closeModalButton = document.getElementById('closeModalButton')
+	submitButton = document.getElementById('formSubmit')
+	// input fields
+	title = document.getElementById('title')
+	author = document.getElementById('author')
+	pages = document.getElementById('pages')
+	read = document.getElementById('read')
 
 	showModal = () => {
 		this.modal.style.display = 'block'

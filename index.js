@@ -4,13 +4,15 @@ import Form from './js/form.js'
 import Library from './js/library.js'
 
 var activeBookId = null
+var libraryTEST = null
+var global = 'globaler Test'
 
 async function initializeApp() {
-	const library = new Library()
-	const form = new Form(library)
+	libraryTEST = new Library()
+	const form = new Form(libraryTEST)
 	const navbar = new Navbar(form)
 
-	console.log(library.allBooks)
+	console.log(libraryTEST.allBooks)
 }
 initializeApp()
 
