@@ -26,6 +26,7 @@ export default class Form {
 	read = document.getElementById('read')
 
 	showModal = book => {
+		console.log('showModal(): ', book)
 		this.bookToChange = book
 		if (editMode) {
 			this.title.value = book.title

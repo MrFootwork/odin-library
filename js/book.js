@@ -8,10 +8,9 @@ export default class Book {
 		this.pages = pages
 		this.read = read
 
-		this.id = id ? id : this.createBookId()
+		this.id = id ? id : this.createBookId2()
 
 		this.library = library
-		this.form = new Form(this.library)
 	}
 
 	// DOM-Elements set by render()
@@ -31,18 +30,45 @@ export default class Book {
 
 		//firebase returns id
 		const docRef = await db.collection('library').add(bookToAdd)
-		return await docRef.id
+		const idReturn = await docRef.id
+		return idReturn
+	}
+
+	sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms))
+	}
+
+	async createBookId2() {
+		const wert = this.createBookId()
+		Promise.resolve(wert)
+		var wert2
+
+		wert.then(result => {
+			wert2 = result
+		})
+
+		console.log('Taking a break...')
+		await this.sleep(2000)
+		console.log('Two seconds later, showing sleep in a loop...')
+
+		console.log(wert, wert2)
+		return wert
 	}
 
 	#editBook = () => {
 		editMode = true
-		this.form.showModal(this)
+		this.library.form.showModal(this)
+		console.log(this)
 	}
 
 	#deleteBook = () => {
+		console.log(globaleVariable)
+		// console.log(db.collection('library').doc(this.id))
+		console.log(this.id)
 		db.collection('library').doc(this.id).delete()
+		// db.collection('library').doc(this.id).delete()
 		this.library.remove(this)
-		this.bookCard.remove()
+		this.bookCardDOM.remove()
 	}
 
 	#toggleRead = () => {

@@ -10,6 +10,9 @@ export default class Library {
 		this.libraryDOM.onclick = this.init()
 	}
 
+	// initialised in index.js
+	form
+
 	get books() {
 		return this.allBooks
 	}
@@ -19,8 +22,9 @@ export default class Library {
 		const libraryJSON = this.#makeJSON(this.snapshot)
 		const dbBookList = this.#sortBooks(libraryJSON)
 		this.allBooks = dbBookList.map(dbBook => this.#createBookFromDB(dbBook))
-		console.log('snapshot: ', this.snapshot)
-		console.log('allBooks: ', this.allBooks)
+		// console.log('snapshot: ', this.snapshot)
+		// console.log('allBooks: ', this.allBooks)
+		console.log(this)
 	}
 
 	#makeJSON(snapshot) {
@@ -67,12 +71,12 @@ export default class Library {
 		}
 	}
 
-	renderAll(librarySnapshot) {
-		librarySnapshot.forEach(book => {
-			console.log(book)
-			// book.render()
-		})
-	}
+	// renderAll(librarySnapshot) {
+	// 	librarySnapshot.forEach(book => {
+	// 		console.log(book)
+	// 		// book.render()
+	// 	})
+	// }
 
 	// use carefully! This also deletes the collection
 	async resetLibrary() {
