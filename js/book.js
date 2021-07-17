@@ -1,3 +1,6 @@
+import { db } from './firebase.js'
+import Form from './form.js'
+
 export default class Book {
 	constructor({ title, author, pages, read, id = null, library }) {
 		this.title = title
@@ -5,87 +8,58 @@ export default class Book {
 		this.pages = pages
 		this.read = read
 
-		this.id = id ? id : this.createId()
+		this.id = id ? id : this.createBookId()
 
 		this.library = library
+		this.form = new Form(this.library)
 	}
 
-	bookCard
+	// DOM-Elements set by render()
+	bookCardDOM
+	titleDOM
+	authorDOM
+	pagesDOM
+	checkboxDOM
 
-	createId() {
-		return '_' + Math.random().toString(36).substr(2, 9)
+	async createBookId() {
+		const bookToAdd = {
+			title: this.title,
+			author: this.author,
+			pages: this.pages,
+			read: this.read,
+		}
+
+		//firebase returns id
+		const docRef = await db.collection('library').add(bookToAdd)
+		return await docRef.id
 	}
 
-	get book() {
-		return this
-	}
-
-	//template
-	updateRead(bookId, readState) {
-		db.collection('library').doc(bookId).update({ read: readState })
-	}
-
-	//template
-	update(bookId, bookInfo) {
-		db.collection('library').doc(bookId).update({
-			title: bookInfo.title,
-			author: bookInfo.author,
-			pages: bookInfo.pages,
-			read: bookInfo.read,
-		})
-	}
-
-	//template
-	addListener() {
-		library.addEventListener('click', e => {
-			const bookId = e.target.dataset.book
-			const lib = globals.snapshotLibrary
-			const bookIndex = lib.findIndex(book => book.id === bookId)
-			const elementClass = e.target.classList[0]
-
-			if (elementClass === 'editButton') {
-				if (bookId) {
-					globals.activeBookId = bookId
-					globals.newBook = false
-					globals.title.value = lib[bookIndex].title
-					globals.author.value = lib[bookIndex].author
-					globals.pages.value = lib[bookIndex].pages
-					globals.read.checked = lib[bookIndex].read
-					globals.submitButton.innerText = 'Buch ändern'
-					globals.modal.style.display = 'block'
-				}
-			}
-
-			if (elementClass === 'checkboxRead') {
-				const readState = e.target.checked
-				if (bookId) {
-					bookTools.updateRead(bookId, readState)
-					lib[bookIndex].read = readState
-				}
-			}
-		})
-	}
-
-	#editBook = e => {
-		console.log('want to edit?', this.id)
-		console.log(e.target)
+	#editBook = () => {
+		editMode = true
+		this.form.showModal(this)
 	}
 
 	#deleteBook = () => {
-		// this.library.remove(this)
-		this.library.test()
-		console.log(libraryTEST)
-		console.log('global: ', global)
+		db.collection('library').doc(this.id).delete()
+		this.library.remove(this)
+		this.bookCard.remove()
 	}
 
-	#toggleRead = e => {
-		console.log('want to toggle?', this.id)
-		console.log(e.target)
+	#toggleRead = () => {
+		this.read = !this.read
+		db.collection('library').doc(this.id).update({ read: this.read })
+	}
+
+	update(bookData) {
+		this.titleDOM.innerHTML = bookData.title
+		this.authorDOM.innerHTML = bookData.author
+		this.pagesDOM.innerHTML = bookData.pages
+		this.checkboxDOM.checked = bookData.read
 	}
 
 	render() {
 		const bookCard = document.createElement('div')
-		this.bookCard = bookCard
+		this.bookCardDOM = bookCard
 		bookCard.classList.add('book')
 		bookCard.id = this.id
 		this.library.libraryDOM.appendChild(bookCard)
@@ -97,6 +71,9 @@ export default class Book {
 		const title = document.createElement('h2')
 		const author = document.createElement('h3')
 		const pages = document.createElement('h3')
+		this.titleDOM = title
+		this.authorDOM = author
+		this.pagesDOM = pages
 		title.innerHTML = `${this.title}`
 		author.innerHTML = `written by ${this.author}`
 		pages.innerHTML = `${this.pages} pages`
@@ -119,6 +96,7 @@ export default class Book {
 		buttonRow.appendChild(toggleSwitch)
 
 		const checkbox = document.createElement('input')
+		this.checkboxDOM = checkbox
 		checkbox.classList.add('checkboxRead')
 		checkbox.type = 'checkbox'
 		checkbox.checked = this.read
