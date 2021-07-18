@@ -6,25 +6,22 @@ export default class Library {
 		this.snapshot = []
 		this.allBooks = []
 
-		this.libraryDOM = document.getElementById('library')
 		this.libraryDOM.onclick = this.init()
 	}
 
-	// initialised in index.js
-	form
-
-	get books() {
-		return this.allBooks
-	}
+	// DOM-elements
+	libraryDOM = document.getElementById('library')
 
 	async init() {
 		this.snapshot = await db.collection('library').get()
 		const libraryJSON = this.#makeJSON(this.snapshot)
 		const dbBookList = this.#sortBooks(libraryJSON)
 		this.allBooks = dbBookList.map(dbBook => this.#createBookFromDB(dbBook))
-		// console.log('snapshot: ', this.snapshot)
-		// console.log('allBooks: ', this.allBooks)
-		console.log(this)
+		console.log('allBooks: ', this)
+	}
+
+	get books() {
+		return this.allBooks
 	}
 
 	#makeJSON(snapshot) {
@@ -71,12 +68,19 @@ export default class Library {
 		}
 	}
 
-	// renderAll(librarySnapshot) {
-	// 	librarySnapshot.forEach(book => {
-	// 		console.log(book)
-	// 		// book.render()
-	// 	})
-	// }
+	allBooksRemove() {
+		this.allBooks.forEach(book => {
+			book.bookCardDOM.remove()
+			console.log('removed: ', book.bookCardDOM)
+		})
+	}
+
+	allBooksRender() {
+		this.allBooks.forEach(book => {
+			book.render()
+			console.log('rendered: ', book.bookCardDOM)
+		})
+	}
 
 	// use carefully! This also deletes the collection
 	async resetLibrary() {

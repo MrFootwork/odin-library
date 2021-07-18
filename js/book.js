@@ -1,16 +1,12 @@
 import { db } from './firebase.js'
-import Form from './form.js'
 
 export default class Book {
-	constructor({ title, author, pages, read, id = null, library }) {
+	constructor({ title, author, pages, read, id = null }) {
 		this.title = title
 		this.author = author
 		this.pages = pages
 		this.read = read
-
-		this.id = id ? id : this.createBookId2()
-
-		this.library = library
+		this.id = id
 	}
 
 	// DOM-Elements set by render()
@@ -20,7 +16,7 @@ export default class Book {
 	pagesDOM
 	checkboxDOM
 
-	async createBookId() {
+	async addToDB() {
 		const bookToAdd = {
 			title: this.title,
 			author: this.author,
@@ -30,44 +26,19 @@ export default class Book {
 
 		//firebase returns id
 		const docRef = await db.collection('library').add(bookToAdd)
-		const idReturn = await docRef.id
-		return idReturn
-	}
-
-	sleep(ms) {
-		return new Promise(resolve => setTimeout(resolve, ms))
-	}
-
-	async createBookId2() {
-		const wert = this.createBookId()
-		Promise.resolve(wert)
-		var wert2
-
-		wert.then(result => {
-			wert2 = result
-		})
-
-		console.log('Taking a break...')
-		await this.sleep(2000)
-		console.log('Two seconds later, showing sleep in a loop...')
-
-		console.log(wert, wert2)
-		return wert
+		const idReturn = docRef.id
+		this.id = idReturn
 	}
 
 	#editBook = () => {
 		editMode = true
-		this.library.form.showModal(this)
+		theForm.showModal(this)
 		console.log(this)
 	}
 
 	#deleteBook = () => {
-		console.log(globaleVariable)
-		// console.log(db.collection('library').doc(this.id))
-		console.log(this.id)
 		db.collection('library').doc(this.id).delete()
-		// db.collection('library').doc(this.id).delete()
-		this.library.remove(this)
+		theLibrary.remove(this)
 		this.bookCardDOM.remove()
 	}
 
@@ -84,15 +55,14 @@ export default class Book {
 	}
 
 	render() {
-		const bookCard = document.createElement('div')
-		this.bookCardDOM = bookCard
-		bookCard.classList.add('book')
-		bookCard.id = this.id
-		this.library.libraryDOM.appendChild(bookCard)
+		this.bookCardDOM = document.createElement('div')
+		this.bookCardDOM.classList.add('book')
+		this.bookCardDOM.id = this.id
+		theLibrary.libraryDOM.appendChild(this.bookCardDOM)
 
 		const textRow = document.createElement('div')
 		textRow.classList.add('textRow')
-		bookCard.appendChild(textRow)
+		this.bookCardDOM.appendChild(textRow)
 
 		const title = document.createElement('h2')
 		const author = document.createElement('h3')
@@ -109,7 +79,7 @@ export default class Book {
 
 		const buttonRow = document.createElement('div')
 		buttonRow.classList.add('buttonRow')
-		bookCard.appendChild(buttonRow)
+		this.bookCardDOM.appendChild(buttonRow)
 
 		const editButton = document.createElement('button')
 		editButton.dataset.book = this.id

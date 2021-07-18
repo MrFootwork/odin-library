@@ -2,10 +2,7 @@ import Book from './book.js'
 import { db } from './firebase.js'
 
 export default class Form {
-	constructor(library) {
-		this.library = library
-
-		//listener
+	constructor() {
 		this.submitButton.onclick = this.#submitBook
 		this.closeModalButton.onclick = this.#closeModal
 	}
@@ -26,9 +23,9 @@ export default class Form {
 	read = document.getElementById('read')
 
 	showModal = book => {
-		console.log('showModal(): ', book)
 		this.bookToChange = book
 		if (editMode) {
+			console.log('showModal(): ', book)
 			this.title.value = book.title
 			this.author.value = book.author
 			this.pages.value = book.pages
@@ -40,6 +37,7 @@ export default class Form {
 		this.modal.onclick = this.#closeModal
 	}
 
+	// TODO also close on ESC-button
 	#closeModal = e => {
 		const closerDomIDs = [
 			this.modal.id,
@@ -74,6 +72,7 @@ export default class Form {
 			throw new Error('Eingabe enthält Fehler!')
 		}
 
+		console.log('editMode: ', editMode)
 		if (editMode) {
 			const newBookEntry = {
 				title,
@@ -83,18 +82,19 @@ export default class Form {
 			}
 			db.collection('library').doc(this.bookToChange.id).update(newBookEntry)
 			this.bookToChange.update(newBookEntry)
-			this.library.update(this.bookToChange.id, newBookEntry)
+			theLibrary.update(this.bookToChange.id, newBookEntry)
 		} else {
 			const bookToAdd = {
 				title,
 				author,
 				pages,
 				read,
-				library: this.library,
 			}
 			const newBook = new Book(bookToAdd)
-			this.library.add(newBook)
+			newBook.addToDB()
+			theLibrary.add(newBook)
 			newBook.render()
+			console.log('allBooks after adding a new one: ', theLibrary)
 		}
 		this.#closeModal(e)
 	}

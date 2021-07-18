@@ -1,14 +1,13 @@
 'use strict'
-import Navbar from './js/navbar.js'
 import Form from './js/form.js'
+import Navbar from './js/navbar.js'
 import Library from './js/library.js'
 
-async function initializeApp() {
-	const library = new Library()
-	const form = new Form(library)
-	library.form = form
-	const navbar = new Navbar(form)
-}
-initializeApp()
+//App starts here
+;(function initializeApp() {
+	theForm = new Form()
+	theNavbar = new Navbar()
+	theLibrary = new Library()
+})()
 
 //TODO Authentication
