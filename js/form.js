@@ -82,8 +82,6 @@ export default class Form {
 			throw new Error('Eingabe enthält Fehler!')
 		}
 
-		console.log('#submitBook, editMode: ', editMode)
-
 		if (editMode) {
 			this.#updateBook(this.bookToChange.id, bookEntry)
 		} else {

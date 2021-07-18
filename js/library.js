@@ -17,7 +17,7 @@ export default class Library {
 		const libraryJSON = this.#makeJSON(this.snapshot)
 		const dbBookList = this.#sortBooks(libraryJSON)
 		this.allBooks = dbBookList.map(dbBook => this.#createBookFromDB(dbBook))
-		console.log('allBooks: ', this)
+		console.log('allBooks: ', this.allBooks)
 	}
 
 	get books() {
@@ -59,26 +59,22 @@ export default class Library {
 
 	update(bookToUpdateId, newEntry) {
 		const index = this.allBooks.findIndex(book => book.id === bookToUpdateId)
-		this.allBooks[index] = {
-			...this.allBooks[index],
-			title: newEntry.title,
-			author: newEntry.author,
-			pages: newEntry.pages,
-			read: newEntry.read,
-		}
+		const bookToChange = this.allBooks[index]
+		bookToChange.title = newEntry.title
+		bookToChange.author = newEntry.author
+		bookToChange.pages = newEntry.pages
+		bookToChange.read = newEntry.read
 	}
 
 	allBooksRemove() {
 		this.allBooks.forEach(book => {
 			book.bookCardDOM.remove()
-			console.log('removed: ', book.bookCardDOM)
 		})
 	}
 
 	allBooksRender() {
 		this.allBooks.forEach(book => {
 			book.render()
-			console.log('rendered: ', book.bookCardDOM)
 		})
 	}
 

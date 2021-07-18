@@ -32,7 +32,6 @@ export default class Book {
 	#editBook = () => {
 		editMode = true
 		theForm.showModal(this)
-		console.log(this)
 	}
 
 	#deleteBook = () => {
