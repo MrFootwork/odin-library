@@ -26,8 +26,7 @@ export default class Book {
 
 		//firebase returns id
 		const docRef = await db.collection('library').add(bookToAdd)
-		const idReturn = docRef.id
-		this.id = idReturn
+		this.id = docRef.id
 	}
 
 	#editBook = () => {

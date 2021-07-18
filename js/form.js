@@ -37,7 +37,7 @@ export default class Form {
 		this.modal.onclick = this.#closeModal
 	}
 
-	// TODO also close on ESC-button
+	// FIXME also close on ESC-button
 	#closeModal = e => {
 		const closerDomIDs = [
 			this.modal.id,
@@ -59,44 +59,50 @@ export default class Form {
 		}
 	}
 
-	#submitBook = e => {
+	// FIXME Clean Code
+	// Decoupling of "add" and "change" funkctions
+	#submitBook = async e => {
 		e.preventDefault()
 		const title = this.title.value
 		const author = this.author.value
 		const pages = this.pages.value
 		const read = this.read.checked
+
+		const bookEntry = {
+			title,
+			author,
+			pages,
+			read,
+		}
+
+		// FIXME Validierung fehlt
 		// const inputsAreValid = this.validateInput(title, author, pages)
 		const inputsAreValid = true
 		if (!inputsAreValid) {
-			// TODO Error-Handler
 			throw new Error('Eingabe enthält Fehler!')
 		}
 
-		console.log('editMode: ', editMode)
+		console.log('#submitBook, editMode: ', editMode)
+
 		if (editMode) {
-			const newBookEntry = {
-				title,
-				author,
-				pages,
-				read,
-			}
-			db.collection('library').doc(this.bookToChange.id).update(newBookEntry)
-			this.bookToChange.update(newBookEntry)
-			theLibrary.update(this.bookToChange.id, newBookEntry)
+			this.#updateBook(this.bookToChange.id, bookEntry)
 		} else {
-			const bookToAdd = {
-				title,
-				author,
-				pages,
-				read,
-			}
-			const newBook = new Book(bookToAdd)
-			newBook.addToDB()
-			theLibrary.add(newBook)
-			newBook.render()
-			console.log('allBooks after adding a new one: ', theLibrary)
+			this.#addBook(bookEntry)
 		}
 		this.#closeModal(e)
+	}
+
+	async #updateBook(bookId, bookEntry) {
+		db.collection('library').doc(bookId).update(bookEntry)
+		this.bookToChange.update(bookEntry)
+		theLibrary.update(bookId, bookEntry)
+	}
+
+	async #addBook(bookEntry) {
+		const newBook = new Book(bookEntry)
+		await newBook.addToDB()
+		theLibrary.add(newBook)
+		newBook.render()
 	}
 
 	validateInput(title, author, pages) {
