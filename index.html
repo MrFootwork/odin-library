@@ -13,18 +13,18 @@
 		<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-firestore.js"></script>
-		<script src="app.js" defer type="text/babel" data-type="module"></script>
+		<script defer src="./js/globals.js"></script>
+		<script defer src="index.js" type="text/babel" data-type="module"></script>
 	</head>
 	<body>
 		<div id="app">
-			<!-- TODO Navbar Styling -->
 			<nav class="navbar">
 				<h1 class="app-title">myLibrary</h1>
 				<button id="modalButton" class="button addBook">Buch hinzufügen</button>
 			</nav>
 			<div id="myModal" class="modal">
 				<div id="form-wrapper" class="modal-content">
-					<span class="close">&times;</span>
+					<span id="closeModalButton" class="close">&times;</span>
 					<form id="form" action="submit">
 						<div class="title">
 							<div class="labelWrap"><label for="title">Title</label></div>
