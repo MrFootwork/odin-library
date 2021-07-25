@@ -45,11 +45,10 @@ export default class Book {
 		db.collection('library').doc(this.id).update({ read: this.read })
 	}
 
-	//FIXME card labels are wrong
 	update(bookData) {
-		this.titleDOM.innerHTML = bookData.title
-		this.authorDOM.innerHTML = bookData.author
-		this.pagesDOM.innerHTML = bookData.pages
+		this.titleDOM.innerHTML = `${bookData.title}`
+		this.authorDOM.innerHTML = `written by ${bookData.author}`
+		this.pagesDOM.innerHTML = `${bookData.pages} pages`
 		this.checkboxDOM.checked = bookData.read
 	}
 

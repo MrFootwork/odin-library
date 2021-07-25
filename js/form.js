@@ -4,7 +4,7 @@ import { db } from './firebase.js'
 export default class Form {
 	constructor() {
 		this.submitButton.onclick = this.#submitBook
-		this.closeModalButton.onclick = this.#closeModal
+		this.closeModalButton.onclick = this.#closeModalClick
 	}
 
 	// book from editButton
@@ -34,28 +34,37 @@ export default class Form {
 		}
 		this.modal.style.display = 'block'
 		this.submitButton.onclick = this.#submitBook
-		this.modal.onclick = this.#closeModal
+		this.modal.onclick = this.#closeModalClick
+		document.addEventListener('keydown', this.#closeModalESC)
 	}
 
-	// FIXME also close on ESC-button
-	#closeModal = e => {
+	#closeModalClick = e => {
 		const closerDomIDs = [
 			this.modal.id,
 			this.closeModalButton.id,
 			this.submitButton.id,
 		]
 		const clickedOnCloser = closerDomIDs.includes(e.target.id)
-		if (clickedOnCloser) {
-			this.modal.style.display = 'none'
-			this.modal.onclick = null
-		}
-		if (clickedOnCloser && editMode) {
+		this.#closeModalProcess(clickedOnCloser)
+	}
+
+	#closeModalESC = e => {
+		const escButtonPressed = e.key === 'Escape'
+		this.#closeModalProcess(escButtonPressed)
+	}
+
+	#closeModalProcess = function (wantToClose) {
+		if (wantToClose && editMode) {
 			this.submitButton.innerText = 'Buch speichern'
+			editMode = false
 			this.title.value = ''
 			this.author.value = ''
 			this.pages.value = ''
 			this.read.checked = false
-			editMode = false
+		}
+		if (wantToClose) {
+			this.modal.style.display = 'none'
+			this.modal.onclick = null
 		}
 	}
 
@@ -87,7 +96,7 @@ export default class Form {
 		} else {
 			this.#addBook(bookEntry)
 		}
-		this.#closeModal(e)
+		this.#closeModalClick(e)
 	}
 
 	async #updateBook(bookId, bookEntry) {
