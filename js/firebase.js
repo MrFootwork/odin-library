@@ -1,6 +1,3 @@
-// import firebase from "firebase/app";
-// import "firebase/firestore";
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
@@ -11,9 +8,7 @@ import {
   deleteDoc,
   updateDoc,
   doc,
-  //   Timestamp,
 } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
-// import { query, orderBy, limit, where, onSnapshot } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js"
 
 // See: https://support.google.com/firebase/answer/7015592
 const firebaseConfig = {
@@ -33,6 +28,3 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export { app, db, collection, getDocs, deleteDoc, addDoc, updateDoc, doc };
-
-//without this, we get errors in the console
-// db.settings({ timestampsInSnapshots: true })

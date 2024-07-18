@@ -32,8 +32,7 @@ export default class Book {
     };
 
     //firebase returns id
-    // const docRef = await db.collection('library').add(bookToAdd)
-    const docRef = await addDoc(doc(collection(db, "library")), bookToAdd);
+    const docRef = await addDoc(collection(db, "library"), bookToAdd);
     this.id = docRef.id;
   }
 
@@ -43,8 +42,7 @@ export default class Book {
   };
 
   #deleteBook = () => {
-    // db.collection("library").doc(this.id).delete();
-    deleteDoc(doc(db, collection("library"), this.id));
+    deleteDoc(doc(collection(db, "library"), this.id));
     theLibrary.remove(this);
     this.bookCardDOM.remove();
   };
