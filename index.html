@@ -1,68 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Project Library</title>
-		<link rel="icon" type="image/x-icon" href="/images/edit.png">
-		<link rel="stylesheet" href="css/style.css" />
-		<link
-			rel="stylesheet"
-			type="text/css"
-			href="//fonts.googleapis.com/css?family=Open+Sans"
-		/>
-		<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<!-- 		<script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js"></script> -->
-<!-- 		<script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-firestore.js"></script> -->
-		<script defer src="./js/globals.js"></script>
-		<script defer src="index.js" type="text/babel" data-type="module"></script>
-	</head>
-	<body>
-		<div id="app">
-			<nav class="navbar">
-				<h1 class="app-title">myLibrary</h1>
-				<button id="modalButton" class="button addBook">Buch hinzufügen</button>
-			</nav>
-			<div id="myModal" class="modal">
-				<div id="form-wrapper" class="modal-content">
-					<span id="closeModalButton" class="close">&times;</span>
-					<form id="form" action="submit">
-						<div class="title">
-							<div class="labelWrap"><label for="title">Title</label></div>
-							<input id="title" name="name" type="text" autocomplete="off" />
-						</div>
-						<div class="author">
-							<div class="labelWrap"><label for="author">Author</label></div>
-							<input id="author" name="author" type="text" autocomplete="off" />
-						</div>
-						<div class="pages">
-							<div class="labelWrap"><label for="pages">Pages</label></div>
-							<input id="pages" name="pages" type="text" autocomplete="off" />
-						</div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Library</title>
+    <link rel="icon" type="image/x-icon" href="/images/edit.png" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="//fonts.googleapis.com/css?family=Open+Sans"
+    />
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js"></script> -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-firestore.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
+    <script defer src="./js/globals.js"></script>
+    <script defer src="index.js" type="text/babel" data-type="module"></script>
+  </head>
+  <body>
+    <div id="app">
+      <nav class="navbar">
+        <h1 class="app-title">myLibrary</h1>
+        <button id="modalButton" class="button addBook">Buch hinzufügen</button>
+      </nav>
 
-						<div class="read">
-							<label for="read">Read</label>
-							<input id="read" name="read" type="checkbox" />
-						</div>
-						<button type="submit" id="formSubmit" class="button">
-							Buch speichern
-						</button>
-					</form>
-				</div>
-			</div>
+      <div id="myModal" class="modal">
+        <div id="form-wrapper" class="modal-content">
+          <span id="closeModalButton" class="close">&times;</span>
 
-			<section id="library"></section>
-		</div>
-		  <!-- Insert this script at the bottom of the HTML, but before you use any Firebase services -->
-  <script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js'
+          <form id="form" action="submit">
+            <div class="title">
+              <div class="labelWrap"><label for="title">Title</label></div>
+              <input id="title" name="name" type="text" autocomplete="off" />
+            </div>
 
-    // If you enabled Analytics in your project, add the Firebase SDK for Google Analytics
-    import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js'
+            <div class="author">
+              <div class="labelWrap"><label for="author">Author</label></div>
+              <input id="author" name="author" type="text" autocomplete="off" />
+            </div>
 
-    // Add Firebase products that you want to use
-    import { getAuth } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js'
-    import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js'
-  </script>
-	</body>
+            <div class="pages">
+              <div class="labelWrap"><label for="pages">Pages</label></div>
+              <input id="pages" name="pages" type="text" autocomplete="off" />
+            </div>
+
+            <div class="read">
+              <label for="read">Read</label>
+              <input id="read" name="read" type="checkbox" />
+            </div>
+
+            <button type="submit" id="formSubmit" class="button">
+              Buch speichern
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <section id="library"></section>
+    </div>
+  </body>
 </html>
